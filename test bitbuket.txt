@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 thành
 hung
+=======
+hung
+thành
+>>>>>>> c7774aa0320228c7206f9817cadfec21f734475b
