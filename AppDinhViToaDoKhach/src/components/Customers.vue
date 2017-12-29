@@ -12,18 +12,18 @@
         </div>
         <div class="item-content">
           <div class="item-name">
-            trinh thanh thuan
+            {{request.val().name}}
           </div>
           <div class="item-start">
             <img :src="linkStartPoint" class="item-image">
             <div class="item-start-content">
-              {{request.val().address}}
+              {{request.val().adress}}
             </div>
           </div>
           <div class="item-phone">
             <img :src="linkPhone" class="item-image">
             <div class="item-phone-content">
-              {{request.val().customerid}}
+              {{request.val().phone}}
             </div>
           </div>
         </div>
@@ -52,7 +52,9 @@ export default {
         snapshot.forEach(function(childSnapshot) {
           //var childKey = childSnapshot.key; get key
           //var childData = childSnapshot.val(); // get data
-          self.requests.push(childSnapshot);
+          if(childSnapshot.val().statusforreq == 1){
+            self.requests.push(childSnapshot);
+          }
           console.log(childSnapshot.val());
         });
     });
