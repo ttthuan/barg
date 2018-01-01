@@ -1,17 +1,18 @@
 <template>
   <div id="list-area">
     <div id="list-area-header" class="noselect">
-      <h4 style="color: #FFF; line-height: 2.5;">DANH SÁCH KHÁCH HÀNG</h4>
+      <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH KHÁCH HÀNG</h4>
     </div>
     <div id="list-area-content">
-      <div class="list-item noselect" v-for="request in requests">
-        <div class="item-avatar">
+      <div class="list-item noselect" v-for="request in requests" @click.prevent  ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave">
+        <div class="item-avatar noclick">
           <div class="avatar">
             <div class="avatar-text">t</div>
           </div>
         </div>
-        <div class="item-content">
-          <div class="item-name">
+        <div class="item-content noclick">
+          <div class="item-name ">
             {{request.val().name}}
           </div>
           <div class="item-start">
@@ -28,17 +29,23 @@
           </div>
         </div>
       </div>
+
+
     </div>
   </div>
 </template>
 
 <script>
+
+var itemActive;
+
 import firebase from 'firebase';
 
 export default {
   name: 'Customers',
   data () {
     return {
+      isActive: false,
       linkStartPoint: "../../src/assets/image/start-point.png",
       linkStopPoint: "../../src/assets/image/end-point.png",
       linkPhone: "../../src/assets/image/phone.png",
@@ -59,9 +66,29 @@ export default {
         });
     });
   },
-  methods:{
-  }
+  methods: {
+        mySelect(e){
+          if (itemActive != null) {
+            itemActive.removeClass("list-item-selected");
+          }
+          itemActive = $(e.target);
+          itemActive.addClass("list-item-selected");
+          itemActive.removeClass("list-item-hover");
+        },
+
+        myHover(e){
+          if (!$(e.target).hasClass("list-item-selected")) {
+            $(e.target).addClass("list-item-hover");
+          }
+        },
+
+        myLeave(e){
+          $(e.target).removeClass("list-item-hover");
+        }
+
+      }
 }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
