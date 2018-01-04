@@ -32,6 +32,7 @@
             this.pnMain = new System.Windows.Forms.Panel();
             this.pnContent = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.flpanel = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.btnSend = new System.Windows.Forms.Button();
@@ -39,7 +40,7 @@
             this.cbbLoaiXe = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtNoiDi = new System.Windows.Forms.TextBox();
+            this.txtVitri = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.txtSDT = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -51,7 +52,6 @@
             this.minimize = new System.Windows.Forms.PictureBox();
             this.maximize = new System.Windows.Forms.PictureBox();
             this.close = new System.Windows.Forms.PictureBox();
-            this.flpanel = new System.Windows.Forms.FlowLayoutPanel();
             this.pnMain.SuspendLayout();
             this.pnContent.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -98,7 +98,16 @@
             this.groupBox2.Size = new System.Drawing.Size(224, 410);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Danh sách khách hàng";
+            this.groupBox2.Text = "Danh sách lịch sử khách hàng";
+            // 
+            // flpanel
+            // 
+            this.flpanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpanel.Location = new System.Drawing.Point(3, 18);
+            this.flpanel.Name = "flpanel";
+            this.flpanel.Size = new System.Drawing.Size(218, 389);
+            this.flpanel.TabIndex = 0;
             // 
             // groupBox1
             // 
@@ -108,7 +117,7 @@
             this.groupBox1.Controls.Add(this.cbbLoaiXe);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.txtNoiDi);
+            this.groupBox1.Controls.Add(this.txtVitri);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.txtSDT);
             this.groupBox1.Controls.Add(this.label5);
@@ -129,7 +138,7 @@
             this.button2.Location = new System.Drawing.Point(281, 242);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(107, 43);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 6;
             this.button2.Text = "Hủy";
             this.button2.UseVisualStyleBackColor = false;
             // 
@@ -141,10 +150,10 @@
             this.btnSend.Location = new System.Drawing.Point(168, 242);
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(107, 43);
-            this.btnSend.TabIndex = 3;
+            this.btnSend.TabIndex = 5;
             this.btnSend.Text = "Gửi";
             this.btnSend.UseVisualStyleBackColor = false;
-            this.btnSend.Click += new System.EventHandler(this.BtnSend_ClickAsync);
+            this.btnSend.Click += new System.EventHandler(this.BtnSend_Click);
             // 
             // txtHoTen
             // 
@@ -152,18 +161,18 @@
             this.txtHoTen.Multiline = true;
             this.txtHoTen.Name = "txtHoTen";
             this.txtHoTen.Size = new System.Drawing.Size(282, 25);
-            this.txtHoTen.TabIndex = 1;
+            this.txtHoTen.TabIndex = 2;
+            this.txtHoTen.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHoTen_KeyDown);
             // 
             // cbbLoaiXe
             // 
             this.cbbLoaiXe.FormattingEnabled = true;
-            this.cbbLoaiXe.Items.AddRange(new object[] {
-            "Loại 1",
-            "Loại 2"});
             this.cbbLoaiXe.Location = new System.Drawing.Point(142, 196);
             this.cbbLoaiXe.Name = "cbbLoaiXe";
             this.cbbLoaiXe.Size = new System.Drawing.Size(155, 23);
-            this.cbbLoaiXe.TabIndex = 2;
+            this.cbbLoaiXe.TabIndex = 4;
+            //this.cbbLoaiXe.SelectedIndexChanged += new System.EventHandler(this.cbbLoaiXe_SelectedIndexChanged);
+            this.cbbLoaiXe.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cbbLoaiXe_KeyDown);
             // 
             // label1
             // 
@@ -187,13 +196,14 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Số điện thoại:";
             // 
-            // txtNoiDi
+            // txtVitri
             // 
-            this.txtNoiDi.Location = new System.Drawing.Point(142, 159);
-            this.txtNoiDi.Multiline = true;
-            this.txtNoiDi.Name = "txtNoiDi";
-            this.txtNoiDi.Size = new System.Drawing.Size(282, 25);
-            this.txtNoiDi.TabIndex = 1;
+            this.txtVitri.Location = new System.Drawing.Point(142, 159);
+            this.txtVitri.Multiline = true;
+            this.txtVitri.Name = "txtVitri";
+            this.txtVitri.Size = new System.Drawing.Size(282, 25);
+            this.txtVitri.TabIndex = 3;
+            this.txtVitri.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtVitri_KeyDown);
             // 
             // label3
             // 
@@ -214,6 +224,7 @@
             this.txtSDT.Size = new System.Drawing.Size(282, 25);
             this.txtSDT.TabIndex = 1;
             this.txtSDT.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSDT_KeyDown);
+            this.txtSDT.Leave += new System.EventHandler(this.txtSDT_Leave);
             // 
             // label5
             // 
@@ -323,15 +334,6 @@
             this.close.TabStop = false;
             this.close.Click += new System.EventHandler(this.close_Click);
             // 
-            // flpanel
-            // 
-            this.flpanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flpanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flpanel.Location = new System.Drawing.Point(3, 18);
-            this.flpanel.Name = "flpanel";
-            this.flpanel.Size = new System.Drawing.Size(218, 389);
-            this.flpanel.TabIndex = 0;
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 15F);
@@ -372,7 +374,7 @@
         private System.Windows.Forms.Panel pnContent;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cbbLoaiXe;
-        private System.Windows.Forms.TextBox txtNoiDi;
+        private System.Windows.Forms.TextBox txtVitri;
         private System.Windows.Forms.TextBox txtSDT;
         private System.Windows.Forms.TextBox txtHoTen;
         private System.Windows.Forms.Label label5;

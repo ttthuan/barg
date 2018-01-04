@@ -9,6 +9,6 @@ namespace TelephoneApp
     public class Driver
     {
         public int StatusForDriver { get; set; }
-        public string Username { get; set; }
+        public string UserName { get; set; }
     }
 }

@@ -17,24 +17,14 @@ namespace TelephoneApp
 {
     public partial class FrmMain : Form
     {
-        public static HttpClient client;
         public FirebaseClient firebase = new FirebaseClient("https://barg-firebase.firebaseio.com/");
 
         public FrmMain()
         {
             InitializeComponent();
 
-            cbbLoaiXe.DisplayMember = "Loại 1";
-            cbbLoaiXe.ValueMember = "1";
-            cbbLoaiXe.DisplayMember = "Loại 2";
-            cbbLoaiXe.ValueMember = "2";
-
-            client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:7000/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-
+            LoadTypeCars();
+            Console.WriteLine("time " + DateTime.Now.Ticks);
         }
 
         private void minimize_Click(object sender, EventArgs e)
@@ -44,7 +34,7 @@ namespace TelephoneApp
                 this.WindowState = FormWindowState.Minimized;
             }
         }
-
+        
         private void Maximize_Click(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Maximized)
@@ -72,65 +62,109 @@ namespace TelephoneApp
         private void PnTitle_MouseUp(object sender, MouseEventArgs e)
         {
             Them.Drag();
-
         }
 
         private void PnTitle_MouseDown(object sender, MouseEventArgs e)
         {
             Them.GetLocation(this);
         }
-        
+
+        public async void LoadTypeCars()
+        {
+            var typecars = await firebase
+              .Child("typecars")
+              .OrderByKey()
+              .OnceAsync<TypeCar>();
+
+            foreach(var type in typecars)
+            {
+                cbbLoaiXe.Items.Add(type.Object);
+            }
+
+            cbbLoaiXe.DisplayMember = "Name";
+            cbbLoaiXe.ValueMember = "Id";
+
+            cbbLoaiXe.SelectedIndex = 0;
+        }
 
         private async void CheckPhoneNumber(string phone)
         {
-            
-
-            var customers = await firebase
-              .Child("customers")
+            string name = null;
+            var requests = await firebase
+              .Child("requests")
               .OrderByKey()
-              .OnceAsync<Customer>();
-
-            bool hasKey = false;
-
-            foreach (var customer in customers)
+              .OnceAsync<Request>();
+            
+            foreach (var request in requests)
             {
-                Console.WriteLine($"{customer.Key}");
-                if(customer.Key == phone)
+                Console.WriteLine($"{request.Key}");
+                if(request.Object.Phone == phone)
                 {
-                    hasKey = true;
+                    RequestItem requestItem = new RequestItem();
+                    requestItem.SetInfor(request.Object.Adress, request.Object.StatusForReq);
+                    flpanel.Controls.Add(requestItem);
+
+                    name = request.Object.Name;
                 }
             }
-
-            if (hasKey)
-            {
-                var requests = await firebase.Child("customers").Child(phone).OrderByKey().OnceAsync<Request>();
-                foreach(var request in requests)
-                {
-                    Console.WriteLine(request.Object.Adress);
-                }
-            }
+            txtHoTen.Text = name;
+            txtSDT.Text = phone;
         }
 
-        private async void BtnSend_ClickAsync(object sender, EventArgs e)
+        private async void BtnSend_Click(object sender, EventArgs e)
         {
-            CheckPhoneNumber("");
-            //HttpResponseMessage result = await SendPoint();
-            //if (result.StatusCode == System.Net.HttpStatusCode.OK)
-            //{
-            //    var url = await result.Content.ReadAsStringAsync();
-            //    var res = JsonConvert.DeserializeObject<Object>(url);
+            var requests = firebase.Child("requests");
 
-            //    if (res != null)
-            //    {
-            //        MessageBox.Show("đã gửi thành công !!! " + res.ToString());
-            //    }
-            //    this.Close();
-            //}
+            if (!string.IsNullOrEmpty(txtSDT.Text) && !string.IsNullOrEmpty(txtHoTen.Text) && !string.IsNullOrEmpty(txtVitri.Text))
+            {
+                Console.WriteLine("3");
+                if (cbbLoaiXe.SelectedIndex > -1)
+                {
+                    await requests.PostAsync(new Request { Adress = txtVitri.Text, Name = txtHoTen.Text, Phone = txtSDT.Text, StatusForReq = 1, TypeOfCar = ((TypeCar)cbbLoaiXe.SelectedItem).Id, TimeReq = DateTime.Now.Ticks });
+                    MessageBox.Show("Đã gửi đi.");
+                }
+            }
         }
 
         private void txtSDT_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Enter)
+            {
+                CheckPhoneNumber(txtSDT.Text);
+                
+                txtHoTen.Focus();
+                txtHoTen.SelectAll();
+            }
+        }
 
+        private void txtHoTen_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtVitri.Focus();
+                txtVitri.SelectAll();
+            }
+        }
+
+        private void txtVitri_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                cbbLoaiXe.Focus();
+            }
+        }
+
+        private void cbbLoaiXe_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSend.Focus();
+            }
+        }
+
+        private void txtSDT_Leave(object sender, EventArgs e)
+        {
+            CheckPhoneNumber(txtSDT.Text);
         }
     }
 }

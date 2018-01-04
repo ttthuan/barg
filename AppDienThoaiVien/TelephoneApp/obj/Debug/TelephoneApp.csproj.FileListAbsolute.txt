@@ -51,6 +51,7 @@ F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\
 F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
 F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
 F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml
+F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.RequestItem.resources
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.exe.config
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.exe
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.pdb
@@ -85,9 +86,9 @@ F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactiv
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.FrmMain.resources
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.Properties.Resources.resources
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.RequestItem.resources
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.GenerateResource.Cache
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.CoreCompileInputs.cache
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.exe

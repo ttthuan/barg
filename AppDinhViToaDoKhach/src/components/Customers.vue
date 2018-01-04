@@ -4,7 +4,7 @@
       <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH KHÁCH HÀNG</h4>
     </div>
     <div id="list-area-content">
-      <div class="list-item noselect" v-for="request in requests" @click.prevent  ="mySelect" @mouseover="myHover" 
+      <div class="list-item noselect" v-for="request in listRequest" @click.prevent  ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave">
         <div class="item-avatar noclick">
           <div class="avatar">
@@ -49,21 +49,26 @@ export default {
       linkStartPoint: "../../src/assets/image/start-point.png",
       linkStopPoint: "../../src/assets/image/end-point.png",
       linkPhone: "../../src/assets/image/phone.png",
-      requests: []
+      listRequest: []
     }
   },
   mounted(){
     var self = this;
     var database = firebase.database().ref('requests');
+
     database.once('value', function(snapshot){
         snapshot.forEach(function(childSnapshot) {
           //var childKey = childSnapshot.key; get key
           //var childData = childSnapshot.val(); // get data
           if(childSnapshot.val().statusforreq == 1){
-            self.requests.push(childSnapshot);
+            self.listRequest.push(childSnapshot);
           }
           console.log(childSnapshot.val());
         });
+    });
+
+    database.on('value', function(snapshot){
+      addEtemInListRequest(snapshot);
     });
   },
   methods: {
@@ -84,9 +89,14 @@ export default {
 
         myLeave(e){
           $(e.target).removeClass("list-item-hover");
-        }
+        },
 
-      }
+        addEtemInListRequest(request){
+          var self = this;
+          self.listRequest.push(request);
+          console.log(request);
+        }
+    }
 }
 
 </script>
