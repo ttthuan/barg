@@ -1,12 +1,245 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>appquanlytrangthaidiem</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./src/assets/css/bootstrap.min.css">
+  <style type="text/css">
+  html,
+  body {
+    min-height: 100%;
+    height: 100%;
+  }
+
+  html {
+    overflow-y: hidden;
+  }
+
+  .fill {
+    min-height: 100%;
+    height: 100%;
+  }
+
+  .vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+  }
+
+  .hamburger-button {
+    background: #673ab7;
+    background-size: auto auto;
+    cursor: pointer;
+    border: 0;
+    display: block;
+    height: 48px;
+    overflow: hidden;
+    top: 8px;
+    left: 8px;
+    width: 48px;
+    position: fixed;
+    z-index: 100;
+    border-radius: 3px;
+    box-shadow: 0px 2px 7px 1px #6b6b6bc7;
+  }
+
+  .hamburger-button-expanded {
+    box-shadow: 0px 0px !important;
+  }
+
+  .hamburger-menu {
+    width: 0%;
+    float: left;
+    background: #d4d4d4;
+    box-shadow: 0px 3px 7px 1px #6b6b6bc7;
+  }
+
+  .transition-menu {
+    transition: width 0.15s ease-out;
+  }
+
+  .map-menu {
+    width: 100%;
+    float: left;
+    background: #c7c7c7;
+  }
+
+  .hamburger-menu-expanded {
+    width: 25%;
+  }
+
+  .map-menu-expanded {
+    width: 75%;
+  }
+
+  .jumbotron {
+    border-radius: 6px;
+    color: inherit;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 9px 3px #6b6b6bc7;
+  }
+
+  .jumbotron-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 98%;
+    height: 98%
+  }
+
+  #list-area {
+    min-height: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  #list-area-header {
+    background-color: #673ab7;
+    height: 64px;
+    width: 500px;
+    box-shadow: 0px 4px 7px 2px #6b6b6bc7;
+    position: relative;
+    z-index: 10;
+  }
+
+  #list-area-content {
+    width: 100%;
+    background-color: #eeeeee;
+    position: relative;
+  }
+
+  .list-item {
+    color: #212121;
+    padding: 10px;
+    transition: background-color 0.15s ease-out;
+    box-shadow: 0px 3px 7px 1px #6b6b6bc7;
+  }
+
+  .list-item-selected {
+    background-color: #6a3ab782;
+    color: #dbe1e1;
+  }
+
+  .list-item-hover {
+    background-color: #fafafa;
+    box-shadow: 0px 2px 7px 4px #6b6b6bc7; !important;
+  }
+
+  .item-avatar {
+    float: left;
+    width: 50px;
+    height: 100px;
+    margin: 5px;
+  }
+
+  .avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 100px;
+    background-color: #00bcd4;
+    position: relative;
+  }
+
+  .avatar-text {
+    top: 50%;
+    left: 50%;
+    transform: translate(-55%, -47%);
+    position: absolute;
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .item-name {
+    font-family: inherit;
+    font-size: 20px;
+  }
+
+  .item-start,
+  .item-end,
+  .item-phone {
+    font-family: inherit;
+    font-size: 15px;
+  }
+
+  .item-start-content,
+  .item-end-content,
+  .item-phone-content {}
+
+  .item-image {
+    height: 18px;
+    width: 18px;
+    float: left;
+    margin-right: 5px;
+    font-weight: 700;
+  }
+
+  .noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+  }
+
+  .noclick {
+    pointer-events: none;
+  }
+
+  #list-area::-webkit-scrollbar-track {
+    border-radius: 0px;
+  }
+
+  #list-area::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  #list-area::-webkit-scrollbar-thumb {
+    border-radius: 1px;
+    background-color: #eeeeee;
+  }
+
+  </style>
+  <title>AppQuanLyTrangThaiDiem</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+  <script src="../src/assets/js/jquery-3.2.1.min.js"></script>
+  <script src="../src/assets/js/bootstrap.min.js" ></script>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    var itemActive;
+    $('#hamburger-button').click(function() {
+      var expanded = $('#map-menu').val();
+      if (expanded == 0) {
+        $('#map-menu').val(1);
+        $('#map-menu').addClass("map-menu-expanded");
+        $('#hamburger-menu').addClass("hamburger-menu-expanded");
+        $('#hamburger-button').addClass("hamburger-button-expanded");
+      } else {
+        $('#map-menu').val(0);
+        $('#hamburger-menu').removeClass("hamburger-menu-expanded");
+        $('#map-menu').removeClass("map-menu-expanded");
+        $('#hamburger-button').removeClass("hamburger-button-expanded");
+      }
+    });
+
+
+  });
+
+  </script>
+</body>
+
 </html>
