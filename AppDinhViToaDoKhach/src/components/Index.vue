@@ -1,9 +1,5 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <span>{{smg}}</span>
-    </div>
-  </div>
+  <div id="map"></div>
 </template>
 
 <script>
