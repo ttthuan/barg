@@ -1,8 +1,8 @@
 {
-  "name": "appquanlytrangthaidiem",
+  "name": "appdinhvitoadokhach",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "1642027 <chua.anime@gmail.com>",
+  "description": "app dinh vi toa do khach",
+  "author": "ttthuan <ttthuan001@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -37,7 +37,6 @@
     "portfinder": "^1.0.13",
     "postcss-import": "^11.0.0",
     "postcss-loader": "^2.0.8",
-    "postcss-url": "^7.2.1",
     "rimraf": "^2.6.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.6",
@@ -52,7 +51,7 @@
     "webpack-merge": "^4.1.0"
   },
   "engines": {
-    "node": ">= 6.0.0",
+    "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
   "browserslist": [

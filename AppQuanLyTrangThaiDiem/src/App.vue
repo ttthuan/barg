@@ -1,23 +1,31 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+  <div class="container-fluid fill" style="margin: 0; padding: 0;">
+        <button id="hamburger-button" class="hamburger-button no" value="0">
+            <img src="../src/assets/image/hamburger-white.png" style="width: 24px">
+          </button>
+        <div id="hamburger-menu" class="hamburger-menu fill transition-menu" >
+          <Customers/>
+        </div>
+        <div id="map-menu" class="map-menu fill transition-menu" >
+          <div id="map-menu-content" class="container-fluid fill" style="margin: 0; padding: 0; position: relative;"> 
+              <div class="jumbotron jumbotron-center "></div>
+          </div>
+      </div>
+    </div>
 </template>
 
 <script>
+import HelloWorld from './components/HelloWorld';
+import Customers from './components/Customers';
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    Customers
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
