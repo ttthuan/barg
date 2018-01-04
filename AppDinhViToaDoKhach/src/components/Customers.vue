@@ -68,7 +68,28 @@ export default {
     });
 
     database.on('value', function(snapshot){
-      addEtemInListRequest(snapshot);
+      if(snapshot){
+        snapshot.forEach(function(childSnapshot) {
+          
+          if(childSnapshot.val().statusforreq == 1){
+            var n = self.listRequest.length;
+            var isHasValued = false;
+
+            for(var i = 0; i < n; i++){
+              if(self.listRequest[i].key == childSnapshot.key){
+                isHasValued = true;
+                break;
+              }
+            }
+
+            if(!isHasValued){
+              self.listRequest.push(childSnapshot);
+            }
+
+          }
+          console.log(childSnapshot.val());
+        });
+      }
     });
   },
   methods: {
@@ -89,12 +110,6 @@ export default {
 
         myLeave(e){
           $(e.target).removeClass("list-item-hover");
-        },
-
-        addEtemInListRequest(request){
-          var self = this;
-          self.listRequest.push(request);
-          console.log(request);
         }
     }
 }

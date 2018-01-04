@@ -9,11 +9,11 @@ namespace TelephoneApp
 {
     public class Request
     {
-        public string Adress { get; set; }
-        public string Name { get; set; }
-        public string Phone { get; set; }
-        public int StatusForReq { get; set; }
-        public long TimeReq { get; set; }
-        public int TypeOfCar { get; set; }
+        public string adress { get; set; }
+        public string name { get; set; }
+        public string phone { get; set; }
+        public int statusforreq { get; set; }
+        public long timereq { get; set; }
+        public int typeofcar { get; set; }
     }
 }

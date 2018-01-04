@@ -93,3 +93,4 @@ F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.c
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.CoreCompileInputs.cache
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.exe
 F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.pdb
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache

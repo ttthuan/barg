@@ -98,13 +98,13 @@ namespace TelephoneApp
             foreach (var request in requests)
             {
                 Console.WriteLine($"{request.Key}");
-                if(request.Object.Phone == phone)
+                if(request.Object.phone == phone)
                 {
                     RequestItem requestItem = new RequestItem();
-                    requestItem.SetInfor(request.Object.Adress, request.Object.StatusForReq);
+                    requestItem.SetInfor(request.Object.adress, request.Object.statusforreq);
                     flpanel.Controls.Add(requestItem);
 
-                    name = request.Object.Name;
+                    name = request.Object.name;
                 }
             }
             txtHoTen.Text = name;
@@ -120,7 +120,7 @@ namespace TelephoneApp
                 Console.WriteLine("3");
                 if (cbbLoaiXe.SelectedIndex > -1)
                 {
-                    await requests.PostAsync(new Request { Adress = txtVitri.Text, Name = txtHoTen.Text, Phone = txtSDT.Text, StatusForReq = 1, TypeOfCar = ((TypeCar)cbbLoaiXe.SelectedItem).Id, TimeReq = DateTime.Now.Ticks });
+                    await requests.PostAsync(new Request { adress = txtVitri.Text, name = txtHoTen.Text, phone = txtSDT.Text, statusforreq = 1, typeofcar = ((TypeCar)cbbLoaiXe.SelectedItem).Id, timereq = DateTime.Now.Ticks });
                     MessageBox.Show("Đã gửi đi.");
                 }
             }
