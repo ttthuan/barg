@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,11 @@ namespace TelephoneApp
 {
     public class Request
     {
-        public string Adress { get; set; }
-        //public Driver[] Drivers { get; set; }
-        public int StatusForReq { get; set; }
-        public string TypeOfCar { get; set; }
+        public string adress { get; set; }
+        public string name { get; set; }
+        public string phone { get; set; }
+        public int statusforreq { get; set; }
+        public long timereq { get; set; }
+        public int typeofcar { get; set; }
     }
 }

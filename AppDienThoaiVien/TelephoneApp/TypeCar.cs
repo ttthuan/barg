@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace TelephoneApp
 {
-    public class Customer
+    public class TypeCar
     {
-        public Request Requests { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
