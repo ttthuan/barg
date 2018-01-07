@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="./src/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../src/assets/css/bootstrap.min.css">
   <style type="text/css">
   html,
   body {
@@ -78,8 +78,7 @@
     color: inherit;
     background-color: #f9f9f9;
     box-shadow: 0px 4px 9px 3px #6b6b6bc7;
-    padding: 0px;
-      }
+  }
 
   .jumbotron-center {
     top: 50%;
@@ -88,10 +87,6 @@
     position: absolute;
     width: 98%;
     height: 98%
-  }
-
-  .container .jumbotron, .container-fluid .jumbotron {
-    padding: 3px;
   }
 
   #list-area {
@@ -105,7 +100,7 @@
     background-color: #673ab7;
     height: 64px;
     width: 500px;
-    box-shadow: 0px 2px 7px 1px #6b6b6bc7;
+    box-shadow: 0px 4px 7px 2px #6b6b6bc7;
     position: relative;
     z-index: 10;
   }
@@ -119,8 +114,8 @@
   .list-item {
     color: #212121;
     padding: 10px;
-    transition: 0.2s ease-out;
-    box-shadow: 0px 0px 0px 0px #FFF;
+    transition: background-color 0.15s ease-out;
+    box-shadow: 0px 3px 7px 1px #6b6b6bc7;
   }
 
   .list-item-selected {
@@ -242,8 +237,6 @@
     });
   });
   </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTEqhWlTQBP2k_PdrhrDh44U6xjWBaQc0"></script>
-  
 </body>
 
 </html>
