@@ -78,7 +78,8 @@
     color: inherit;
     background-color: #f9f9f9;
     box-shadow: 0px 4px 9px 3px #6b6b6bc7;
-  }
+    padding: 0px;
+      }
 
   .jumbotron-center {
     top: 50%;
@@ -87,6 +88,10 @@
     position: absolute;
     width: 98%;
     height: 98%
+  }
+
+  .container .jumbotron, .container-fluid .jumbotron {
+    padding: 3px;
   }
 
   #list-area {
@@ -235,11 +240,10 @@
         $('#hamburger-button').removeClass("hamburger-button-expanded");
       }
     });
-
-
   });
-
   </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTEqhWlTQBP2k_PdrhrDh44U6xjWBaQc0"></script>
+  
 </body>
 
 </html>

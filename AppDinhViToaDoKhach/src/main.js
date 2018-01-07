@@ -5,11 +5,12 @@ import VueRouter from 'vue-router';
 import firebase from 'firebase';
 
 // main compoment
-import App from './App'
+import App from './App';
 
 // router components
 import Index from './components/Index.vue';
 import Login from './components/Login.vue';
+import MapDinhVi from './components/MapDinhVi.vue';
 
 Vue.use(VueRouter);
 
@@ -24,22 +25,20 @@ var config = {
 };
 firebase.initializeApp(config);
 
-//router
 const routes = [
-	{ path: '/', component: Index },
-	{ path: '/login', component: Login }
+  { path: '/', component: Index },
+  { path: '/login', component: Login },
+  { path: '/places/:key/:address', component: Index },
 ];
 
-const router = new VueRouter({
-	routes
-});
+const router = new VueRouter({routes});
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App }
-})
+    el: '#app',
+    router,
+    render: h => h(App)
+});
