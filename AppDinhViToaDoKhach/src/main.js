@@ -28,7 +28,7 @@ firebase.initializeApp(config);
 const routes = [
   { path: '/', component: Index },
   { path: '/login', component: Login },
-  { path: '/places/:key/:address', component: Index },
+  { path: '/:phone', component: Index },
 ];
 
 const router = new VueRouter({routes});

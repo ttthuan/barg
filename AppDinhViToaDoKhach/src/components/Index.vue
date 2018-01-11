@@ -1,8 +1,18 @@
 <template>
-  <div class="google-map" :id="mapName"></div>
+  <div class="map-container">
+    <div id="floating-panel">
+      <button type="button" class="btn btn-primary" v-on:click="ShowDriverNearLest">
+        <span class="glyphicon glyphicon-ok"></span>
+      </button>
+    </div>
+    <div class="google-map" :id="mapName"></div>
+  </div>
+  
 </template>
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name: 'Index',
   data () {
@@ -28,14 +38,17 @@ export default {
     self.map = new google.maps.Map(element, options);
     self.geocoder = new google.maps.Geocoder;
 
-    self.GeocodeInGoogle(self.$route.params.address);
-
+    if(self.$route.params.phone){
+      //console.log(self.$route.params.phone);
+      self.GeocodeInGoogle(self.GetValue(self.$route.params.phone, 'address'));
+    }
   },
 
   methods: {
 
     GeocodeInGoogle(address){
       var self = this;
+
       self.geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
 
@@ -45,6 +58,10 @@ export default {
 
         } else {
           console.log('Geocode was not successful for the following reason: ' + status);
+          //console.log(self.GetValue(self.$route.params.phone, 'addressold'));
+
+          //self.GeocodeInGoogle(self.GetValue(self.$route.params.key, 'addressold'));
+          //self.map.setCenter(location);
         }
       });
     },
@@ -55,7 +72,14 @@ export default {
         if (status === 'OK') {
           if (results[0]) {
             
-            console.log(results[0].formatted_address);
+            // console.log(results[0].formatted_address);
+            // get key
+            var phone = self.$route.params.phone;
+            //console.log("key " + key);
+            var dataref = firebase.database().ref('customers/'+phone+'/request');
+            var dragged = { address: results[0].formatted_address};
+
+            dataref.update(dragged);
             
           } else {
             //window.alert('No results found');
@@ -94,6 +118,22 @@ export default {
 
       self.markers.push(marker);
       self.map.setCenter(location);
+    },
+
+    ShowDriverNearLest(){
+      console.log("Near lest");
+    },
+
+    GetValue(key, name){
+      var self = this;
+      var dataref = firebase.database().ref('customers/'+key+'/request');
+      var value;
+      dataref.once('value', function(snapshot){
+
+        value = snapshot.child(name).val();
+        
+      });
+      return value;
     }
 
   },
@@ -102,8 +142,8 @@ export default {
 
     '$route'(to, from){
       //console.log(to.params.address);
-      //console.log(to.params.key);
-      this.GeocodeInGoogle(to.params.address);
+      //console.log(to.params.phone);
+      this.GeocodeInGoogle(this.GetValue(to.params.phone, 'address'));
     }
 
   }

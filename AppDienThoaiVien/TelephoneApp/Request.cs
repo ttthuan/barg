@@ -9,7 +9,8 @@ namespace TelephoneApp
 {
     public class Request
     {
-        public string adress { get; set; }
+        public string address { get; set; }
+        public string addressold { get; set; }
         public string name { get; set; }
         public string phone { get; set; }
         public int statusforreq { get; set; }

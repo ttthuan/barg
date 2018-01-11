@@ -101,7 +101,7 @@ namespace TelephoneApp
                 if(request.Object.phone == phone)
                 {
                     RequestItem requestItem = new RequestItem();
-                    requestItem.SetInfor(request.Object.adress, request.Object.statusforreq);
+                    requestItem.SetInfor(request.Object.address, request.Object.statusforreq);
                     flpanel.Controls.Add(requestItem);
 
                     name = request.Object.name;
@@ -120,7 +120,7 @@ namespace TelephoneApp
                 Console.WriteLine("3");
                 if (cbbLoaiXe.SelectedIndex > -1)
                 {
-                    await requests.PostAsync(new Request { adress = txtVitri.Text, name = txtHoTen.Text, phone = txtSDT.Text, statusforreq = 1, typeofcar = ((TypeCar)cbbLoaiXe.SelectedItem).Id, timereq = DateTime.Now.Ticks });
+                    await requests.PostAsync(new Request { address = txtVitri.Text, addressold = txtVitri.Text, name = txtHoTen.Text, phone = txtSDT.Text, statusforreq = 1, typeofcar = ((TypeCar)cbbLoaiXe.SelectedItem).Id, timereq = DateTime.Now.Ticks });
                     MessageBox.Show("Đã gửi đi.");
                 }
             }
