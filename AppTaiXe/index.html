@@ -47,6 +47,48 @@
     height: 100vh;
   }
 
+  #hamburger-button{
+    cursor: pointer;
+    border: 0;
+    display: block;
+    overflow: hidden;
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    margin: 7px;
+  }
+
+  #hamburger-menu {
+    width: 75vw;
+    min-width: 0px;
+    max-width: 400px;
+    height: 100vh;
+    background: #d4d4d4;
+    position: fixed;
+    z-index: 200;
+    transition: 0.15s ease-out;
+    left: -75vw;
+  }
+
+  .hamburger-menu-expanded{
+    left: 0vw !important;
+  }
+
+  #hamburger-menu-back {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 199;
+    transition: 0.15s ease-out;
+    visibility: hidden;
+  }
+
+  .hamburger-menu-back-actived {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    visibility: visible !important;
+  }
+
   .noselect {
     -webkit-touch-callout: none;
     /* iOS Safari */
@@ -74,11 +116,25 @@
 <body>
   <div id="app">
     <div id="navbar">
+      <button id="hamburger-button">
+        <img src="./src/assets/image/hamburger-white.png" style="width: 24px; height:24px">
+      </button>
+    </div>
+    
+    <div id="hamburger-menu">
+      <div>
+        
+      </div>
+    </div>
+
+    <div id="hamburger-menu-back">
       
     </div>
+    
     <div id="map">
       
     </div>
+
 
   </div>
   <!-- built files will be auto injected -->
@@ -98,7 +154,18 @@
         });
     }
     $(document).ready(function() {
-      
+      $('#hamburger-button').click(function() {
+          $('#hamburger-menu').addClass("hamburger-menu-expanded");
+          $('#hamburger-menu-back').addClass("hamburger-menu-back-actived");
+
+      });
+
+      $('#hamburger-menu-back').click(function() {
+          $('#hamburger-menu').removeClass("hamburger-menu-expanded");
+          $('#hamburger-menu-back').removeClass("hamburger-menu-back-actived");
+
+      });
+
     });
   </script>
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOZTu3oQQZuepU7XDCVKL1KxPShXeQoMc&callback=initMap""></script>
