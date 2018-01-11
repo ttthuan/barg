@@ -1,26 +1,18 @@
-var express = require('express'),
-	morgan = require('morgan'),
-	bodyParser = require('body-parser');
-
+var express = require('express');
+var bodyParser = require('body-parser');
+// init server
 var app = express();
+var port = process.env.PORT || 5000;
 
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-	extended:true
-}));
+var server = app.listen(port, function () {
+    console.log('Server is running..');
+});
 
-var configs = require('./config');
-var taikhoanController = require('./controllers/taikhoanController');
-var nganhangController = require('./controllers/nganhangController');
-
-app.use('/api/accounts', taikhoanController);
-app.use('/api/banks', nganhangController);
+var api = require('./controllers/APIController');
 
 app.get('/', function (req, res) {
-	res.send("hello client");
-})
+    var hello = 'Welcome to ATMService!';
+    res.send(hello);
+});
 
-app.listen(configs.PORT, ()=>{
-	console.log("api listening on port: " + configs.PORT);
-})
+app.use('/api', api);
