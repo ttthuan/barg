@@ -50,27 +50,40 @@
 
   .hamburger-menu {
     width: 0%;
+    min-width: 0px;
+    max-width: 500px;
     float: left;
     background: #d4d4d4;
     box-shadow: 0px 3px 7px 1px #6b6b6bc7;
   }
 
   .transition-menu {
-    transition: width 0.15s ease-out;
+    transition: 0.15s ease-out;
   }
 
   .map-menu {
     width: 100%;
+    max-width: 100%;
     float: left;
     background: #c7c7c7;
+    
   }
 
   .hamburger-menu-expanded {
     width: 25%;
+    min-width: 330px;
   }
 
   .map-menu-expanded {
     width: 75%;
+    /* Firefox */
+    max-width: -moz-calc(100% - 330px);
+    /* WebKit */
+    max-width: -webkit-calc(100% - 330px);
+    /* Opera */
+    max-width: -o-calc(100% - 330px);
+    /* Standard */
+    max-width: calc(100% - 330px);
   }
 
   .jumbotron {
@@ -230,13 +243,13 @@
       var expanded = $('#map-menu').val();
       if (expanded == 0) {
         $('#map-menu').val(1);
-        $('#map-menu').addClass("map-menu-expanded");
         $('#hamburger-menu').addClass("hamburger-menu-expanded");
+        $('#map-menu').addClass("map-menu-expanded");
         $('#hamburger-button').addClass("hamburger-button-expanded");
       } else {
         $('#map-menu').val(0);
-        $('#hamburger-menu').removeClass("hamburger-menu-expanded");
         $('#map-menu').removeClass("map-menu-expanded");
+        $('#hamburger-menu').removeClass("hamburger-menu-expanded-minwidth").removeClass("hamburger-menu-expanded");
         $('#hamburger-button').removeClass("hamburger-button-expanded");
       }
     });
