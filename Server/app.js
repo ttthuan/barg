@@ -1,7 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var morgan = require('morgan');
+
 // init server
 var app = express();
+app.use(morgan('dev'));
 var port = process.env.PORT || 5000;
 
 var server = app.listen(port, function () {
