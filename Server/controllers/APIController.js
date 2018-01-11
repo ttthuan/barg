@@ -18,38 +18,48 @@ firebase.initializeApp(config);
 var router = express.Router();
 
 // api dành cho điện thoại viện
-router.get('/customers', function (req, res) {
+router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq', function (req, res) {
+    var phone1 = req.params.phone;
+    var name1 = req.params.name;
+    var addressold1 = req.params.addressold;
+    var typeofcar1 = req.params.typeofcar;
+    var timereq1 = req.params.timereq;
+    var statusforreq1 = req.params.statusforreq;
     var ref = firebase.app().database().ref("customers");
     ref.once("value")
         .then(function (snap) {
             var datontai = false;
             snap.forEach((customer) => {
-                if (customer.key == "0123456798") {
+                if (customer.key == phone1) {
                     datontai = true;
                     return;
                 }
             });
-            console.log('oj');
             if (datontai == false) {
-                var customersRef = ref.child("0123456798");
+                var customersRef = ref.child(phone1);
                 customersRef.set(
                     {
                         histories: "null",
-                        name: "totoro",
+                        name: name1,
                         request: {
-                            address: "227 nguyễn văn cừ, p10",
-                            addressold: "227 nguyễn văn cừ, p10"
-                        }
+                            address: addressold1,
+                            addressold: addressold1,
+                            statusforreq: statusforreq1,
+                            timereq: timereq1,
+                            typeofcar:typeofcar1
+                        },
+                        
                     })
             }
-            console.log(datontai);
             if (datontai == true) {
-                console.log("Da vao If");
-                var customersRef = ref.child("0123456798");
+                var customersRef = ref.child(phone1);
                 customersRef.update({
                     request: {
-                        address: "228 nguyễn văn cừ, p10",
-                        addressold: "228 nguyễn văn cừ, p10"
+                        address: addressold1,
+                        addressold: addressold1,
+                        statusforreq: statusforreq1,
+                        timereq: timereq1,
+                        typeofcar:typeofcar1
                     }
                 });
             }
