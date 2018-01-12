@@ -1,19 +1,8 @@
-
-
 var express = require('express');
 
 // init firebae
-var firebase = require("firebase");
-var config = {
-    apiKey: "AIzaSyAARBsG4HnBEqtCGFTDpR-BL7HLmBKD7TQ",
-    authDomain: "barg-firebase.firebaseapp.com",
-    databaseURL: "https://barg-firebase.firebaseio.com",
-    projectId: "barg-firebase",
-    storageBucket: "barg-firebase.appspot.com",
-    messagingSenderId: "573103357657"
-};
+var firebase = require('../configs/FirebaseConfig');
 
-firebase.initializeApp(config);
 
 var router = express.Router();
 
@@ -25,6 +14,7 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
     var typeofcar1 = req.params.typeofcar;
     var timereq1 = req.params.timereq;
     var statusforreq1 = req.params.statusforreq;
+    console.log("debug " + name1);
     var ref = firebase.app().database().ref("customers");
     ref.once("value")
         .then(function (snap) {
@@ -46,7 +36,7 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                             addressold: addressold1,
                             statusforreq: statusforreq1,
                             timereq: timereq1,
-                            typeofcar:typeofcar1
+                            typeofcar:typeofcar1,
                         },
                         
                     })
@@ -59,10 +49,11 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                         addressold: addressold1,
                         statusforreq: statusforreq1,
                         timereq: timereq1,
-                        typeofcar:typeofcar1
+                        typeofcar:typeofcar1,
                     }
                 });
             }
         });
+        res.json("sucess");
 });
 module.exports = router;
