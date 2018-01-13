@@ -322,7 +322,7 @@
       </div>
 
 
-      <div id="hamburger-menu-items">
+      <div id="hamburger-menu-items" class="noselect">
         <div class="hamburger-menu-item">
           <div class="hamburger-menu-item-icon">
             <img src="./src/assets/image/logout.png" style="width: 18px; height: 18px;">
@@ -408,9 +408,7 @@
             $('#countdown-text').text((5-i));
             if (i == time) {    
               clearInterval(interval);
-              i = 0;
               $('.circle_animation').css('stroke-dashoffset', 0);
-              $('#countdown-text').text((5-i));
               return;
             }
             $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
