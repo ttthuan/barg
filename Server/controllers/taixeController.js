@@ -59,7 +59,7 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
 });
 
 // api tai xe khong xac nhan  (app tai xe gui cho server)
-router.get('/confirmcustomer/:customer/:driver', function (req, res) {
+router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
     var _customer = req.params.customer;
     var _driver = req.params.driver;
 
@@ -72,7 +72,18 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
                     driver.update({
                         statusfordriver: 1
                     });
-                    res.send("Khong");
+                    var driversref = ref.child(_customer).child("request").child("drivers");
+                    var _drivers = [];
+                    driversref.once("value")
+                    .then(function (snap) {
+                        snap.forEach((drivers) => {
+                            if(drivers.key != _driver)
+                            {
+                                _drivers.push(drivers.key);
+                                console.log(drivers.key);
+                            }
+                        });
+                    });
                     return;
                 }
             });
