@@ -30,6 +30,10 @@ app.use(function(req, res, next){
 app.use('/api', api);
 app.use('/driver', driverController);
 
+app.use('/dienthoaivien', dienthoaivienApi);
+app.use('/dinhvi', dinhviApi);
+app.use('/taixe', taixeApi);
+app.use('/trangthaidiem', trangthaidiemApi);
 
 app.get('/', function (req, res) {
     var hello = 'Welcome to BargService!';
