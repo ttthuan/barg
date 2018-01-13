@@ -166,7 +166,15 @@ export default {
                     position: new google.maps.LatLng(snapshot.val().locations.lat,snapshot.val().locations.lng),
                     title: snapshot.key,
                     icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                    tag: snapshot,
                   });
+                  marker.addListener('click', function(event){
+                    console.log(snapshot.key);
+                    // call api hỏi tài xế có lái không
+                    // gửi phone, gửi key tài xế
+                    self.CallApiRequestDriver(phone, snapshot.key);
+                  });
+
                   self.driverMarker.push(marker);
                 }else{
                   var idx = self.GetMarkerHasTitle(snapshot.key);
@@ -190,6 +198,38 @@ export default {
         lat: self.lat,
         lng: self.lng
       })
+      .then(function(response){
+
+      })
+      .catch(function(error){
+
+      });
+
+      self.CallApiLocated();
+    },
+
+    CallApiLocated(){
+      var self = this;
+      var phone = self.$route.params.phone;
+
+      var addressold = self.GetValue(phone, 'addressold');
+      //console.log('point located '+addressold);
+      axios.post('https://barg-server.herokuapp.com/driver/located', {
+        address:addressold,
+        lat: self.lat,
+        lng: self.lng
+      })
+      .then(function(response){
+        console.log('call api located seccess');
+      })
+      .catch(function(error){
+        console.log('call api located error ' + error);
+      });
+    },
+
+    CallApiRequestDriver(phone, driver){
+      var url = `https://barg-server.herokuapp.com/`;
+      axios.get(url)
       .then(function(response){
 
       })
