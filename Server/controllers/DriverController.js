@@ -116,33 +116,25 @@ router.post('/located', function(req, res){
         });
 
         if(isHasValue == true){
-            var location = {
-                lat: lat,
-                lng: lng
-            };
+            // var location = {
+            //     lat: lat,
+            //     lng: lng
+            // };
 
-            var update = {};
-            update['/locations'] = location;
+            // var update = {};
+            // update['/locations'] = location;
 
-            pointsRef.child(address).update(update);
+            // pointsRef.child(address).update(update);
         }else{
-            var point1 = {
-                address: address
-            };
-
             var location = {
                 lat: lat,
                 lng: lng
             };
 
-            var updatePoint = {};
-            updatePoint['/'+address] = point1;
-            pointsRef.update(updatePoint);
-
             var update = {};
-            update['/locations'] = location;
+            update['/'+address + '/locations'] = location;
 
-            pointsRef.child(address).update(update);
+            pointsRef.update(update);
         }
     });
     res.json('success');
