@@ -192,34 +192,41 @@ namespace TelephoneApp
         {
             if (!string.IsNullOrEmpty(txtSDT.Text) && !string.IsNullOrEmpty(txtHoTen.Text) && !string.IsNullOrEmpty(txtVitri.Text))
             {
-                //Console.WriteLine("3");
-                if (cbbLoaiXe.SelectedIndex > -1)
+                try
                 {
-                    string[] content = new string[6];
-                    content[0] = txtSDT.Text;
-                    content[1] = txtHoTen.Text;
-                    content[2] = txtVitri.Text;
-                    content[3] = ((TypeCar)cbbLoaiXe.SelectedItem).Id.ToString();
-                    content[4] = DateTime.Now.Ticks.ToString();
-                    content[5] = "1";
+                    //Console.WriteLine("3");
+                    if (cbbLoaiXe.SelectedIndex > -1)
+                    {
+                        string[] content = new string[6];
+                        content[0] = txtSDT.Text;
+                        content[1] = txtHoTen.Text;
+                        content[2] = txtVitri.Text;
+                        content[3] = ((TypeCar)cbbLoaiXe.SelectedItem).Id.ToString();
+                        content[4] = DateTime.Now.Ticks.ToString();
+                        content[5] = "1";
 
-                    HttpResponseMessage result = await SendCustomerToServer(content);
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        string str = await result.Content.ReadAsStringAsync();
-                        MessageBox.Show("Gửi thành công");
-                    }
-                    else
-                    {
-                        if (result.StatusCode == HttpStatusCode.NoContent)
+                        HttpResponseMessage result = await SendCustomerToServer(content);
+                        if (result.StatusCode == HttpStatusCode.OK)
                         {
-                            //MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+                            string str = await result.Content.ReadAsStringAsync();
+                            MessageBox.Show("Gửi thành công");
                         }
                         else
                         {
-                            //MessageBox.Show("Gateway time out");
+                            if (result.StatusCode == HttpStatusCode.NoContent)
+                            {
+                                //MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+                            }
+                            else
+                            {
+                                //MessageBox.Show("Gateway time out");
+                            }
                         }
                     }
+                }
+                catch(Exception ex)
+                {
+
                 }
             }
         }

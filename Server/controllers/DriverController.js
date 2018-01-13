@@ -6,7 +6,7 @@ var util = require('util');
 
 var router = express.Router();
 
-// api dành cho driver
+// api tìm tài xế gần nhất
 router.post('/finddrivernearest', function (req, res) {
     var phone = req.body.phone;
     var lat = req.body.lat;
@@ -28,7 +28,11 @@ router.post('/finddrivernearest', function (req, res) {
         //res.json(drivers);
         driverDatas = drivers;
 
-        lenDriver = drivers.numChildren();
+        drivers.forEach(function(driver){
+            if(driver.val().statusfordriver == 3){
+                lenDriver++;
+            }
+        });
 
         var origin = {
             lat: lat,
@@ -91,6 +95,48 @@ router.post('/finddrivernearest', function (req, res) {
         
     });
 
+    res.json('success');
+});
+
+// api xác nhận điểm đã được định vị
+router.post('/located', function(req, res){
+    var address = req.body.address;
+    var lat = req.body.lat;
+    var lng = req.body.lng;
+
+    var pointsRef = firebase.database().ref('points');
+    var isHasValue = false;
+
+    pointsRef.once('value', function(points){
+        points.forEach(function(point) {
+            if(point.val().address == address){
+                isHasValue = true;
+                return;
+            }
+        });
+
+        if(isHasValue == true){
+            // var location = {
+            //     lat: lat,
+            //     lng: lng
+            // };
+
+            // var update = {};
+            // update['/locations'] = location;
+
+            // pointsRef.child(address).update(update);
+        }else{
+            var location = {
+                lat: lat,
+                lng: lng
+            };
+
+            var update = {};
+            update['/'+address + '/locations'] = location;
+
+            pointsRef.update(update);
+        }
+    });
     res.json('success');
 });
 

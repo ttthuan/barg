@@ -40,17 +40,22 @@ export default {
       zoom: 14,
       center: new google.maps.LatLng(51.501527,-0.1921837)
     };
-    self.bounds = new google.maps.LatLng(51.501527,-0.1921837);
+    
     self.map = new google.maps.Map(element, options);
     self.geocoder = new google.maps.Geocoder;
-
-    self.Detachlisteners();
-    self.DeleteAllDriverMarker();
 
     if(self.$route.params.phone){
       //console.log('phone param '+self.$route.params.phone);
       self.GeocodeInGoogle(self.GetValue(self.$route.params.phone, 'address'));
     }
+
+    if(self.phoneRef){
+      self.phoneRef.off();
+      self.phoneRef = null;
+    }
+    self.Detachlisteners();
+    self.DeleteAllDriverMarker();
+    self.bounds = new google.maps.LatLngBounds();
   },
 
   methods: {
@@ -59,7 +64,7 @@ export default {
       var self = this;
 
       self.geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
+        if (status == 'OK') {
 
           self.DeleteAllMarker();
 
@@ -130,6 +135,7 @@ export default {
         self.MarkerMoveChange(event);
       });
 
+      self.bounds.extend(location);
       self.markers.push(marker);
       self.map.setCenter(location);
     },
@@ -138,9 +144,11 @@ export default {
       var self = this;
       console.log("Near lest " + self.$route.params.phone);
       var phone = self.$route.params.phone;
+      var numberDriver = 1;
 
       if(self.phoneRef){
         self.phoneRef.off();
+        self.phoneRef = null;
       }
 
       self.Detachlisteners();
@@ -149,39 +157,56 @@ export default {
 
       self.phoneRef = firebase.database().ref('customers/' + phone + '/request/drivers');
 
-      self.phoneRef.on('value', function(datas){
-        if(datas.numChildren() > 0){
-          //console.log('drivers change ' + datas.key + ' ' + datas.val().driver1.statusfordriver);
+      self.phoneRef.on('value', function(driversInCustomer){
+        if(driversInCustomer.numChildren() > 0){
+          //console.log('drivers change ' + driversInCustomer.key + ' ' + driversInCustomer.val().driver1.statusfordriver);
           
-          datas.forEach(function(data){
+          driversInCustomer.forEach(function(data){
             console.log("driver gan " + data.key);
             var driverRef = firebase.database().ref('drivers/' + data.key);
-            driverRef.on('value', function(snapshot){
-              if(snapshot){
-                console.log("driver " + snapshot.key);
+            driverRef.on('value', function(driverItem){
+              if(driverItem){
+                console.log("driver " + driverItem.key);
                 // add marker
-                if(!self.CheckIsHasMarker(snapshot.key)){
+                if(!self.CheckIsHasMarker(driverItem.key)){
                   var marker = new google.maps.Marker({
                     map: self.map,
-                    position: new google.maps.LatLng(snapshot.val().locations.lat,snapshot.val().locations.lng),
-                    title: snapshot.key,
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                    position: new google.maps.LatLng(driverItem.val().locations.lat,driverItem.val().locations.lng),
+                    title: driverItem.key,
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/green.png',
+                    tag: driverItem,
+                    label: (numberDriver)+'',
                   });
+                  numberDriver++;
+                  marker.addListener('click', function(event){
+                    console.log(driverItem.key);
+                    // call api hỏi tài xế có lái không
+                    // gửi phone, gửi key tài xế
+                    self.CallApiRequestDriver(phone, driverItem.key);
+                  });
+                  self.bounds.extend(marker.getPosition());
                   self.driverMarker.push(marker);
                 }else{
-                  var idx = self.GetMarkerHasTitle(snapshot.key);
-                  if(idx > 0){
+                  var idx = self.GetMarkerHasTitle(driverItem.key);
+                  console.log("index found " + idx);
+                  if(idx >= 0){
                     var marker = self.driverMarker[idx];
                     console.log("marker " + marker);
-                    //console.log(snapshot.locations);
-                    //console.log(snapshot.locations.lat + " location " + snapshot.locations.lng);
-                    marker.setPosition(new google.maps.LatLng(snapshot.val().locations.lat,snapshot.val().locations.lng));
+                    //console.log(driverItem.locations);
+                    //console.log(driverItem.locations.lat + " location " + driverItem.locations.lng);
+                    marker.setPosition(new google.maps.LatLng(driverItem.val().locations.lat,driverItem.val().locations.lng));
+                    if(driverItem.val().statusfordriver == 2){ // chấp nhận lái
+                      marker.setIcon('http://maps.google.com/mapfiles/ms/micons/blue.png');
+                    }else if(driverItem.val().statusfordriver == 3){ // đang sẵn sàng
+                      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green.png');
+                    }
                   }
                 }
               }
             });
             self.driversRef.push(driverRef);
           });
+          self.map.fitBounds(self.bounds);
         }
       });
 
@@ -195,6 +220,38 @@ export default {
       })
       .catch(function(error){
 
+      });
+
+      self.CallApiLocated();
+    },
+
+    CallApiLocated(){
+      var self = this;
+      var phone = self.$route.params.phone;
+
+      var addressold = self.GetValue(phone, 'addressold');
+      //console.log('point located '+addressold);
+      axios.post('https://barg-server.herokuapp.com/driver/located', {
+        address:addressold,
+        lat: self.lat,
+        lng: self.lng
+      })
+      .then(function(response){
+        console.log('call api located success');
+      })
+      .catch(function(error){
+        console.log('call api located error ' + error);
+      });
+    },
+
+    CallApiRequestDriver(phone, driver){
+      var url = `https://barg-server.herokuapp.com/api/choosedriver/${phone}/${driver}`;
+      axios.get(url)
+      .then(function(response){
+        console.log("call api request driver success");
+      })
+      .catch(function(error){
+        console.log("call api request driver error " + error);
       });
     },
 
@@ -212,26 +269,28 @@ export default {
 
     CheckIsHasMarker(title){
       var self = this;
+      var result = false;
       if(self.driverMarker){
         self.driverMarker.forEach( function(element, index) {
           if(element.getTitle() == title){
-            return true;
+            result = true;
           }
         });
       }
-      return false;
+      return result;
     },
 
     GetMarkerHasTitle(title){
       var self = this;
+      var idx = -1;
       if(self.driverMarker){
         self.driverMarker.forEach( function(element, index) {
           if(element.getTitle() == title){
-            return index;
+            idx = index;
           }
         });
       }
-      return -1;
+      return idx;
     },
 
     Detachlisteners(){
@@ -243,6 +302,7 @@ export default {
           }
         });
       }
+      self.driverRef = [];
     },
 
     DeleteAllDriverMarker(){
@@ -254,6 +314,7 @@ export default {
           }
         });
       }
+      self.driverMarker = [];
     },
 
   },
