@@ -1,8 +1,8 @@
 var express = require('express');
-
+var router = express.Router();
 // init firebae
 var firebase = require('../configs/FirebaseConfig');
-var router = express.Router();
+
 
 // api dành cho điện thoại viện
 router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq', function (req, res) {
