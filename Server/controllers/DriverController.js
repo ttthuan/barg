@@ -37,54 +37,55 @@ router.post('/finddrivernearest', function (req, res) {
 
         drivers.forEach(function(driver){
             // check trang thai cho driver
-            DriectionAPI.GetDirection(origin, driver.val().locations)
-            .then(function(response){
-                var status = util.inspect(JSON.stringify(response.data.status));
-                console.log(status);
+            if(driver.val().statusfordriver == 3){ // trang thai dang san sang
+                DriectionAPI.GetDirection(origin, driver.val().locations)
+                .then(function(response){
+                    var status = util.inspect(JSON.stringify(response.data.status));
+                    console.log(status);
 
-                if(status != 'status'){
-                    distance = util.inspect(JSON.stringify(response.data.routes[0].legs[0].distance.value));
-                
-                    var item = {
-                        key: driver.key,
-                        distance: distance
-                    }
-
-                    listDriver.push(item);
-
-                    console.log(driver.key + ' ' + distance);
-                    console.log(listDriver.length + ' ' + lenDriver);
-
-                    if(listDriver.length == lenDriver){
-                        listDriver.sort(function(a, b){
-                            return parseFloat(a.distance) - parseFloat(b.distance);
-                        })
-                        console.log("sort");
-
-                        var driversRef = firebase.database().ref('customers/'  + phone + '/request/drivers');
-                        var i = 0;
-                        var Solan = listDriver.length > N ? N:listDriver.length;
-                        var postData = {
-                            statusfordriver: 1
-                        };
-
-                        var updates = {};
-
-                        for(i = 0; i < Solan; i++){
-                            updates['/'+listDriver[i].key] = postData;
+                    if(status != 'status'){
+                        distance = util.inspect(JSON.stringify(response.data.routes[0].legs[0].distance.value));
+                    
+                        var item = {
+                            key: driver.key,
+                            distance: distance
                         }
-                        driversRef.update(updates);
 
-                        // listDriver.forEach(function(item){
-                        //     console.log('sort item ' + item.distance);
-                        // });
+                        listDriver.push(item);
+
+                        console.log(driver.key + ' ' + distance);
+                        console.log(listDriver.length + ' ' + lenDriver);
+
+                        if(listDriver.length == lenDriver){
+                            listDriver.sort(function(a, b){
+                                return parseFloat(a.distance) - parseFloat(b.distance);
+                            })
+                            console.log("sort");
+
+                            var driversRef = firebase.database().ref('customers/'  + phone + '/request/drivers');
+                            var i = 0;
+                            var Solan = listDriver.length > N ? N:listDriver.length;
+                            var postData = {
+                                statusfordriver: 1
+                            };
+
+                            var updates = {};
+
+                            for(i = 0; i < Solan; i++){
+                                updates['/'+listDriver[i].key] = postData;
+                            }
+                            driversRef.update(updates);
+
+                            // listDriver.forEach(function(item){
+                            //     console.log('sort item ' + item.distance);
+                            // });
+                        }
                     }
-                }
-
-            })
-            .catch(function(error){
-                console.log("LOI LAY DISTANCE TREN GOOGLE " + error);
-            });
+                })
+                .catch(function(error){
+                    console.log("LOI LAY DISTANCE TREN GOOGLE " + error);
+                });
+            }
         });
 
         
