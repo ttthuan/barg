@@ -8,21 +8,31 @@ var firebase = require('../configs/FirebaseConfig');
 router.get('/login/:username/:password', function (req, res) {
     var _username = req.params.username;
     var _password = req.params.password;
-
+    
     var ref = firebase.app().database().ref("drivers");
     ref.once("value")
-        .then(function (snap) {
-            snap.forEach((driver) => {
-                if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
-                    console.log("Đăng nhập thành công");
-                    return
-                }
-                else {
-                    res.json("error")
-                }
-            });
+    .then(function (snap) {
+        var sucess = false;
+        snap.forEach((driver) => {
+            if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
+                var status = ref.child(driver.key);
+                status.update({
+                    statusfordriver : 3
+                });
+                sucess = true;
+                res.statusCode = 200;
+                res.json("Đăng nhập thành công");
+                return;
+            }
         });
+        if(sucess == false){
+            res.statusCode = 504;
+            res.json("Đăng nhập thất bại");
+            return;
+        }
+    });
 });
+
 // api tai xe xac nhan  (app tai xe gui cho server)
 router.get('/confirmcustomer/:customer/:driver', function (req, res) {
     var _customer = req.params.customer;
