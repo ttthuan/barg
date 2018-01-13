@@ -57,4 +57,26 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
         });
     res.json("sucess");
 });
+
+// api tai xe khong xac nhan  (app tai xe gui cho server)
+router.get('/confirmcustomer/:customer/:driver', function (req, res) {
+    var _customer = req.params.customer;
+    var _driver = req.params.driver;
+
+    var ref = firebase.app().database().ref("customers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((customer) => {
+                if (customer.key == _customer) {
+                    var driver = ref.child(_customer).child("request").child("drivers").child(_driver);
+                    driver.update({
+                        statusfordriver: 1
+                    });
+                    res.send("Khong");
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
+});
 module.exports = router;
