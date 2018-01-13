@@ -10,6 +10,7 @@
   body {
     min-height: 100%;
     height: 100%;
+    font-family: Roboto, Arial, sans-serif;
   }
 
   html {
@@ -36,8 +37,8 @@
     width: 100%;
     height: 50px;
     position: fixed;
-    background-color: #673ab7;
-    box-shadow: 0px 2px 7px 1px #6b6b6bc7;
+    background-color: #35495e;
+    box-shadow: 0px 3px 7px 1px #6b6b6bc7;
     z-index: 100;
 
   }
@@ -63,7 +64,7 @@
     min-width: 0px;
     max-width: 400px;
     height: 100vh;
-    background: #d4d4d4;
+    background-color: #f9f9f9;
     position: fixed;
     z-index: 200;
     transition: 0.15s ease-out;
@@ -89,6 +90,36 @@
     visibility: visible !important;
   }
 
+  #hamburger-menu-items{
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .hamburger-menu-item{
+    height: 40px;
+    width: 100%;
+    /*background-color: rgba(153, 153, 218, 0.5);*/
+    display: table;
+  }
+
+  .hamburger-menu-item-icon{
+    height: 40px;
+    width: 60px;
+    text-align: center;
+    vertical-align:middle;
+    display: table-cell;
+  }
+
+  .hamburger-menu-item-context{
+    height: 40px;
+    text-align: left;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: bold;
+    vertical-align:middle;
+    display: table-cell;
+  }
+
   #avatar-background{
     width: 100%;
     height: 150px;
@@ -106,14 +137,14 @@
     -moz-filter: blur(2px);
     -o-filter: blur(2px);
     -ms-filter: blur(2px);
-    filter: blur(2px);
+    filter: blur(3px);
   }
 
   #avatar-background-front{
     background-color: rgba(255, 255, 255, 0.1);
     width: 100%;
     height: 100%;
-    box-shadow: inset 0px 0px 17px 10px rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0px -3px 13px 13px rgba(255, 255, 255, 0.5);
     position: absolute;
   }
 
@@ -133,6 +164,119 @@
     left: -o-calc(50% - 30px);
     /* Standard */
     left: calc(50% - 30px);
+  }
+
+
+
+  #countdown{
+    position: fixed;
+    top: 17%;
+    width: 320px;
+    height: 450px;
+    background-color: #f7f7f7;
+    box-shadow: 0px 6px 12px 4px #6b6b6bc7;
+    border-radius: 5px;
+    /* Firefox */
+    left: -moz-calc(50% - 160px);
+    /* WebKit */
+    left: -webkit-calc(50% - 160px);
+    /* Opera */
+    left: -o-calc(50% - 160px);
+    /* Standard */
+    left: calc(50% - 160px);
+  }
+
+
+  #countdown-text{
+    position: absolute;
+    top: 15%;
+    line-height: 161px;
+    width: 100%;
+    font-size: 45px;
+    text-align: center;
+    color: #35495e;
+    font-weight: bold;
+    left: -2px;
+  }
+
+  svg {
+    position: absolute;
+    top: 15%;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+    /* Firefox */
+    left: -moz-calc(50% - 81px);
+    /* WebKit */
+    left: -webkit-calc(50% - 81px);
+    /* Opera */
+    left: -o-calc(50% - 81px);
+    /* Standard */
+    left: calc(50% - 81px);
+
+  }
+
+  .circle_animation {
+    stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
+    stroke-dashoffset: 0;
+    transition: all 1s linear;
+  }
+
+  #countdown-content{
+    position: absolute;
+    top: 250px;
+    display: table;
+    width: 100%;
+    height: 130px;
+    padding: 0 10px 0 10px;
+  }
+
+  #countdown-content-name, #countdown-content-address, #countdown-content-phone{
+    display: table-row;
+    text-align: center;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 15px;
+  }
+
+  #countdown-content-name{
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+
+  #countdown-content-phone{
+    font-weight: bold;
+  }
+
+  #countdown-buttons{
+    position: absolute;
+    bottom: 0px;
+    display: table;
+    width: 100%;
+    height: 80px;
+    padding: 0 10px 0 10px;
+  }
+
+  #countdown-buttons-ok, #countdown-buttons-cancel{
+    display: table-cell;
+    width: 50%;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .button{    
+    border: 2px solid #35495e;
+    background-color: #35495e;
+    width: 80%;
+    height: 35px;
+    text-align: center;
+    text-decoration: none;
+    color: #41b883;
+    display: inline-block;
+    font-weight: bold;    
+    font-size: 16px;
+    border-radius: 3px;
+
+    box-shadow: 0px 1px 2px 1px #6b6b6bc7;
   }
 
   .noselect {
@@ -169,26 +313,60 @@
     
     <div id="hamburger-menu">
       <div id="avatar-background">
-        <div id="avatar-background-back">
-          
-        </div>
-        <div id="avatar-background-front">
-          
-        </div>
+        <div id="avatar-background-back"></div>
+        <div id="avatar-background-front"></div>
 
         <div id="avatar">
           <img src="./src/assets/image/avatar.jpg" style="width: 60px; height: 60px">
-          
+        </div>
+      </div>
+
+
+      <div id="hamburger-menu-items">
+        <div class="hamburger-menu-item">
+          <div class="hamburger-menu-item-icon">
+            <img src="./src/assets/image/logout.png" style="width: 18px; height: 18px;">
+          </div>
+          <div class="hamburger-menu-item-context">
+            Đăng xuất
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
+    <div id="hamburger-menu-back"></div>
+
+    <div id="map"></div>
+
+    <div id="countdown">
+      <div id="countdown-text">5</div>
+      <svg width="160" height="160">
+        <g>
+          <circle id="circle-inside" r="62" cy="80" cx="80" stroke-width="4" stroke="#35495e" fill="none"/>
+          <circle id="circle" class="circle_animation" r="70" cy="80" cx="80" stroke-width="13" stroke="#41b883" fill="none"/>
+        </g>
+      </svg>
+      <div id="countdown-content" class="noselect">
+        <div id="countdown-content-name">
+          Sheikou Akiyoshi
+        </div>
+        <div id="countdown-content-address">
+          123 Nguyễn Văn Cừ, xã Thất Thảo, huyện Mộc La, Thành phố HCM
+        </div>
+        <div id="countdown-content-phone">
+          0123456789
+        </div>
+      </div>
+      <div id="countdown-buttons">
+        <div id="countdown-buttons-ok">
+          <button id="btnOK" class="button">Chấp nhận</button>
+        </div>
+        <div id="countdown-buttons-cancel">
+          <button id="btnCancel" type="submit" class="button">Từ chối</button>
         </div>
       </div>
     </div>
-
-    <div id="hamburger-menu-back">
-    </div>
-    <div id="map">
-      
-    </div>
-
 
   </div>
   <!-- built files will be auto injected -->
@@ -218,6 +396,28 @@
           $('#hamburger-menu').removeClass("hamburger-menu-expanded");
           $('#hamburger-menu-back').removeClass("hamburger-menu-back-actived");
 
+      });
+
+      $('#btnOK').click(function() {
+        //countdown
+        var time = 5;
+        var initialOffset = '440';
+        var i = 0;
+
+        var interval = setInterval(function() {
+            $('#countdown-text').text((5-i));
+            if (i == time) {    
+              clearInterval(interval);
+              i = 0;
+              $('.circle_animation').css('stroke-dashoffset', 0);
+              $('#countdown-text').text((5-i));
+              return;
+            }
+            $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
+            i++;  
+        }, 1000);
+
+        //end countdown
       });
 
     });
