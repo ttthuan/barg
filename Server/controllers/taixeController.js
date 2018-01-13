@@ -8,20 +8,20 @@ var firebase = require('../configs/FirebaseConfig');
 router.get('/login/:username/:password', function (req, res) {
     var _username = req.params.username;
     var _password = req.params.password;
-    
+
     var ref = firebase.app().database().ref("drivers");
     ref.once("value")
-    .then(function (snap) {
-        snap.forEach((driver) => {
-            if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
-                console.log("Đăng nhập thành công");
-                return
-            }
-            else {
-                res.json("error")
-            }
+        .then(function (snap) {
+            snap.forEach((driver) => {
+                if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
+                    console.log("Đăng nhập thành công");
+                    return
+                }
+                else {
+                    res.json("error")
+                }
+            });
         });
-    });
 });
 // api tai xe xac nhan  (app tai xe gui cho server)
 router.get('/confirmcustomer/:customer/:driver', function (req, res) {
@@ -62,7 +62,14 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
 router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
     var _customer = req.params.customer;
     var _driver = req.params.driver;
-
+    var _drivers = [];
+    //Update thong tin tai xe tu choi
+    var refDrivers = firebase.app().database().ref("drivers");
+    var driverRef = refDrivers.child(_driver);
+    driverRef.update({
+        mycustomer:"null"
+    });
+    //Tự động chọn tài xế mới cho khách hàng
     var ref = firebase.app().database().ref("customers");
     ref.once("value")
         .then(function (snap) {
@@ -73,17 +80,43 @@ router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
                         statusfordriver: 1
                     });
                     var driversref = ref.child(_customer).child("request").child("drivers");
-                    var _drivers = [];
+
                     driversref.once("value")
-                    .then(function (snap) {
-                        snap.forEach((drivers) => {
-                            if(drivers.key != _driver)
-                            {
-                                _drivers.push(drivers.key);
-                                console.log(drivers.key);
-                            }
+                        .then(function (snap) {
+                            snap.forEach((drivers) => {
+                                if (drivers.key != _driver && drivers.val().statusfordriver == 6) {
+                                    _drivers.push(drivers.key);
+                                    //console.log(drivers.key);
+                                }
+                            });
+                            return _drivers;
+                        })
+                        .then((r) => {
+                            console.log(_drivers[0]);
+                            var driversecond = _drivers[0];
+                            // lấy ra thông tin khách hàng
+                            var refCustomers = firebase.app().database().ref("customers");
+                            var _mycustomer;
+                            refCustomers.once("value")
+                                .then(function (snap) {
+                                    snap.forEach((customer) => {
+                                        if (customer.key == _customer) {
+                                            // update khách hàng cho tài xế.
+                                            var refDrivers = firebase.app().database().ref("drivers");
+                                            var driverRef = refDrivers.child(driversecond);
+                                            var update = {};
+                                            var newMycustomer = {
+                                                phone: customer.key,
+                                                address: customer.child('request').val().addressold,
+                                                name: customer.val().name
+                                            };
+                                            update['\mycustomer'] = newMycustomer
+                                            driverRef.update(update);
+                                            return;
+                                        }
+                                    })
+                                })
                         });
-                    });
                     return;
                 }
             });
