@@ -5,6 +5,11 @@ var morgan = require('morgan');
 var api = require('./controllers/APIController');
 var driverController = require('./controllers/DriverController');
 
+var dienthoaivienApi = require('./controllers/dienthoaivienController');
+var dinhviApi = require('./controllers/dinhviController');
+var taixeApi = require('./controllers/taixeController');
+var trangthaidiemApi = require('./controllers/trangthaidiemController');
+
 // init server
 var app = express();
 app.use(morgan('dev'));
@@ -24,6 +29,7 @@ app.use(function(req, res, next){
 
 app.use('/api', api);
 app.use('/driver', driverController);
+
 
 app.get('/', function (req, res) {
     var hello = 'Welcome to BargService!';
