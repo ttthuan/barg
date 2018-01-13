@@ -89,6 +89,52 @@
     visibility: visible !important;
   }
 
+  #avatar-background{
+    width: 100%;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #avatar-background-back{
+    background-image: url("./src/assets/image/avatar-background.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(2px);
+  }
+
+  #avatar-background-front{
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0px 0px 17px 10px rgba(255, 255, 255, 0.5);
+    position: absolute;
+  }
+
+  #avatar{
+    border-radius: 100px;
+    width: 60px;
+    height: 60px;
+    margin-top: 30px;
+    position: absolute;
+    overflow: hidden;
+    /*left: 50%;*/
+    /* Firefox */
+    left: -moz-calc(50% - 30px);
+    /* WebKit */
+    left: -webkit-calc(50% - 30px);
+    /* Opera */
+    left: -o-calc(50% - 30px);
+    /* Standard */
+    left: calc(50% - 30px);
+  }
+
   .noselect {
     -webkit-touch-callout: none;
     /* iOS Safari */
@@ -122,15 +168,23 @@
     </div>
     
     <div id="hamburger-menu">
-      <div>
-        
+      <div id="avatar-background">
+        <div id="avatar-background-back">
+          
+        </div>
+        <div id="avatar-background-front">
+          
+        </div>
+
+        <div id="avatar">
+          <img src="./src/assets/image/avatar.jpg" style="width: 60px; height: 60px">
+          
+        </div>
       </div>
     </div>
 
     <div id="hamburger-menu-back">
-      
     </div>
-    
     <div id="map">
       
     </div>
