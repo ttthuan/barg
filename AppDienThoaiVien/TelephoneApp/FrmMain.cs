@@ -12,19 +12,35 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Firebase.Database;
 using Firebase.Database.Query;
+using System.Configuration;
+using System.ServiceModel.Configuration;
+using System.Threading;
+using System.Net;
 
 namespace TelephoneApp
 {
     public partial class FrmMain : Form
     {
+        public static HttpClient HTTP_CLIENT = new HttpClient();
+
         public FirebaseClient firebase = new FirebaseClient("https://barg-firebase.firebaseio.com/");
 
         public FrmMain()
         {
             InitializeComponent();
 
-            LoadTypeCars();
+            Thread thread = new Thread(new ThreadStart(LoadTypeCars));
+
+            thread.Start();
             Console.WriteLine("time " + DateTime.Now.Ticks);
+
+            var configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal);
+            var serviceModelSectionGroup = ServiceModelSectionGroup.GetSectionGroup(configuration);
+            var services = serviceModelSectionGroup.Services;
+            string baseAddress = services.Services[0].Host.BaseAddresses[0].BaseAddress.ToString();
+            HTTP_CLIENT.BaseAddress = new Uri(baseAddress);
+            HTTP_CLIENT.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         private void minimize_Click(object sender, EventArgs e)
@@ -69,6 +85,8 @@ namespace TelephoneApp
             Them.GetLocation(this);
         }
 
+        delegate void LoadTypeCarCallback();
+
         public async void LoadTypeCars()
         {
             var typecars = await firebase
@@ -76,62 +94,151 @@ namespace TelephoneApp
               .OrderByKey()
               .OnceAsync<TypeCar>();
 
-            foreach(var type in typecars)
+            if (cbbLoaiXe.InvokeRequired)
             {
-                cbbLoaiXe.Items.Add(type.Object);
+                LoadTypeCarCallback d = new LoadTypeCarCallback(LoadTypeCars);
+                this.Invoke(d);
             }
+            else
+            {
+                foreach (var type in typecars)
+                {
+                    cbbLoaiXe.Items.Add(type.Object);
+                }
 
-            cbbLoaiXe.DisplayMember = "Name";
-            cbbLoaiXe.ValueMember = "Id";
+                cbbLoaiXe.DisplayMember = "Name";
+                cbbLoaiXe.ValueMember = "Id";
 
-            cbbLoaiXe.SelectedIndex = 0;
+                cbbLoaiXe.SelectedIndex = 0;
+            }
         }
 
-        private async void CheckPhoneNumber(string phone)
-        {
-            string name = null;
-            var requests = await firebase
-              .Child("requests")
-              .OrderByKey()
-              .OnceAsync<Request>();
-            
-            foreach (var request in requests)
-            {
-                Console.WriteLine($"{request.Key}");
-                if(request.Object.phone == phone)
-                {
-                    RequestItem requestItem = new RequestItem();
-                    requestItem.SetInfor(request.Object.address, request.Object.statusforreq);
-                    flpanel.Controls.Add(requestItem);
+        delegate void PanelAddControllCallback();
 
-                    name = request.Object.name;
+        private async void CheckPhoneNumber()
+        {
+            string phone = txtSDT.Text;
+            phone = phone.Trim();
+            try
+            {
+                string name = null;
+                var customers = await firebase
+                  .Child("customers")
+                  .OrderByKey()
+                  .OnceAsync<Customer>();
+
+                foreach (var customer in customers)
+                {
+                   
+                    if (customer.Key.ToString().Trim().Equals(phone))
+                    {
+                        phone = customer.Key;
+                        name = customer.Object.name;
+
+                        var requestNew = await firebase
+                              .Child("customers/" + phone + "/request")
+                              .OnceSingleAsync<RequestNew>();
+
+                        RequestItem requestItem1 = new RequestItem();
+                        requestItem1.SetInfor(requestNew.address, requestNew.statusforreq);
+
+                        if (flpanel.InvokeRequired)
+                        {
+                            PanelAddControllCallback d = new PanelAddControllCallback(CheckPhoneNumber);
+                            flpanel.Invoke(d);
+                        }
+                        else
+                        {
+                            flpanel.Controls.Add(requestItem1);
+                            txtHoTen.Text = name;
+                        }
+                        
+                        var requests = await firebase
+                            .Child("customers/" + phone + "/histories")
+                            .OnceAsync<Request>();
+
+
+                        foreach (var request in requests)
+                        {
+                            //Console.WriteLine($"{request.Key}");
+                            if (request.Object.phone == phone)
+                            {
+                                RequestItem requestItem = new RequestItem();
+                                requestItem.SetInfor(request.Object.address, request.Object.statusforreq);
+
+
+                                if (flpanel.InvokeRequired)
+                                {
+                                    PanelAddControllCallback d = new PanelAddControllCallback(CheckPhoneNumber);
+                                    flpanel.Invoke(d);
+                                }
+                                else
+                                {
+                                    flpanel.Controls.Add(requestItem);
+                                }
+                                
+                            }
+                        }
+                    }
                 }
             }
-            txtHoTen.Text = name;
-            txtSDT.Text = phone;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         private async void BtnSend_Click(object sender, EventArgs e)
         {
-            var requests = firebase.Child("requests");
-
             if (!string.IsNullOrEmpty(txtSDT.Text) && !string.IsNullOrEmpty(txtHoTen.Text) && !string.IsNullOrEmpty(txtVitri.Text))
             {
-                Console.WriteLine("3");
+                //Console.WriteLine("3");
                 if (cbbLoaiXe.SelectedIndex > -1)
                 {
-                    await requests.PostAsync(new Request { address = txtVitri.Text, addressold = txtVitri.Text, name = txtHoTen.Text, phone = txtSDT.Text, statusforreq = 1, typeofcar = ((TypeCar)cbbLoaiXe.SelectedItem).Id, timereq = DateTime.Now.Ticks });
-                    MessageBox.Show("Đã gửi đi.");
+                    string[] content = new string[6];
+                    content[0] = txtSDT.Text;
+                    content[1] = txtHoTen.Text;
+                    content[2] = txtVitri.Text;
+                    content[3] = ((TypeCar)cbbLoaiXe.SelectedItem).Id.ToString();
+                    content[4] = DateTime.Now.Ticks.ToString();
+                    content[5] = "1";
+
+                    HttpResponseMessage result = await SendCustomerToServer(content);
+                    if (result.StatusCode == HttpStatusCode.OK)
+                    {
+                        string str = await result.Content.ReadAsStringAsync();
+                        MessageBox.Show("Gửi thành công");
+                    }
+                    else
+                    {
+                        if (result.StatusCode == HttpStatusCode.NoContent)
+                        {
+                            //MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
+                        }
+                        else
+                        {
+                            //MessageBox.Show("Gateway time out");
+                        }
+                    }
                 }
             }
+        }
+
+        public async Task<HttpResponseMessage> SendCustomerToServer(String[] ds)
+        {
+            // customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq
+            HttpResponseMessage response = await HTTP_CLIENT.GetAsync(String.Format("api/customers/{0}/{1}/{2}/{3}/{4}/{5}", ds[0], ds[1], ds[2], ds[3], ds[4], ds[5]));
+
+            return response;
         }
 
         private void txtSDT_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                CheckPhoneNumber(txtSDT.Text);
-                
+                Thread thread = new Thread(new ThreadStart(CheckPhoneNumber));
+                thread.Start();
+
                 txtHoTen.Focus();
                 txtHoTen.SelectAll();
             }
@@ -164,7 +271,8 @@ namespace TelephoneApp
 
         private void txtSDT_Leave(object sender, EventArgs e)
         {
-            CheckPhoneNumber(txtSDT.Text);
+            Thread thread = new Thread(new ThreadStart(CheckPhoneNumber));
+            thread.Start();
         }
     }
 }
