@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./src/assets/css/bootstrap.min.css">
+  <style type="text/css">
+  html,
+  body {
+    min-height: 100%;
+    height: 100%;
+    font-family: Roboto, Arial, sans-serif;
+  }
+
+  html {
+    overflow-y: hidden;
+  }
+
+  .fill {
+    min-height: 100%;
+    height: 100%;
+  }
+
+  .vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+  }
+
+  #app{
+    min-height: 100%;
+    height: 100%;
+  }
+
+  #navbar{
+    width: 100%;
+    height: 50px;
+    position: fixed;
+    background-color: #35495e;
+    box-shadow: 0px 3px 7px 1px #6b6b6bc7;
+    z-index: 100;
+
+  }
+
+  #map
+  {
+    height: 100vh;
+  }
+
+  #hamburger-button{
+    cursor: pointer;
+    border: 0;
+    display: block;
+    overflow: hidden;
+    width: 36px;
+    height: 36px;
+    background-color: transparent;
+    margin: 7px;
+  }
+
+  #hamburger-menu {
+    width: 75vw;
+    min-width: 0px;
+    max-width: 400px;
+    height: 100vh;
+    background-color: #f9f9f9;
+    position: fixed;
+    z-index: 200;
+    transition: 0.15s ease-out;
+    left: -75vw;
+  }
+
+  .hamburger-menu-expanded{
+    left: 0vw !important;
+  }
+
+  #hamburger-menu-back {
+    background-color: transparent;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 199;
+    transition: 0.15s ease-out;
+    visibility: hidden;
+  }
+
+  .hamburger-menu-back-actived {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    visibility: visible !important;
+  }
+
+  #hamburger-menu-items{
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .hamburger-menu-item{
+    height: 40px;
+    width: 100%;
+    /*background-color: rgba(153, 153, 218, 0.5);*/
+    display: table;
+  }
+
+  .hamburger-menu-item-icon{
+    height: 40px;
+    width: 60px;
+    text-align: center;
+    vertical-align:middle;
+    display: table-cell;
+  }
+
+  .hamburger-menu-item-context{
+    height: 40px;
+    text-align: left;
+    font-size: 14px;
+    font-family: Roboto, Arial, sans-serif;
+    font-weight: bold;
+    vertical-align:middle;
+    display: table-cell;
+  }
+
+  #avatar-background{
+    width: 100%;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #avatar-background-back{
+    background-image: url("./src/assets/image/avatar-background.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-filter: blur(2px);
+    -moz-filter: blur(2px);
+    -o-filter: blur(2px);
+    -ms-filter: blur(2px);
+    filter: blur(3px);
+  }
+
+  #avatar-background-front{
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
+    box-shadow: inset 0px -3px 13px 13px rgba(255, 255, 255, 0.5);
+    position: absolute;
+  }
+
+  #avatar{
+    border-radius: 100px;
+    width: 60px;
+    height: 60px;
+    margin-top: 30px;
+    position: absolute;
+    overflow: hidden;
+    /*left: 50%;*/
+    /* Firefox */
+    left: -moz-calc(50% - 30px);
+    /* WebKit */
+    left: -webkit-calc(50% - 30px);
+    /* Opera */
+    left: -o-calc(50% - 30px);
+    /* Standard */
+    left: calc(50% - 30px);
+  }
+
+
+
+  #countdown{
+    position: fixed;
+    top: 17%;
+    width: 320px;
+    height: 450px;
+    background-color: #f7f7f7;
+    box-shadow: 0px 6px 12px 4px #6b6b6bc7;
+    border-radius: 5px;
+    /* Firefox */
+    left: -moz-calc(50% - 160px);
+    /* WebKit */
+    left: -webkit-calc(50% - 160px);
+    /* Opera */
+    left: -o-calc(50% - 160px);
+    /* Standard */
+    left: calc(50% - 160px);
+  }
+
+
+  #countdown-text{
+    position: absolute;
+    top: 15%;
+    line-height: 161px;
+    width: 100%;
+    font-size: 45px;
+    text-align: center;
+    color: #35495e;
+    font-weight: bold;
+    left: -2px;
+  }
+
+  svg {
+    position: absolute;
+    top: 15%;
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+    /* Firefox */
+    left: -moz-calc(50% - 81px);
+    /* WebKit */
+    left: -webkit-calc(50% - 81px);
+    /* Opera */
+    left: -o-calc(50% - 81px);
+    /* Standard */
+    left: calc(50% - 81px);
+
+  }
+
+  .circle_animation {
+    stroke-dasharray: 440; /* this value is the pixel circumference of the circle */
+    stroke-dashoffset: 0;
+    transition: all 1s linear;
+  }
+
+  #countdown-content{
+    position: absolute;
+    top: 250px;
+    display: table;
+    width: 100%;
+    height: 130px;
+    padding: 0 10px 0 10px;
+  }
+
+  #countdown-content-name, #countdown-content-address, #countdown-content-phone{
+    display: table-row;
+    text-align: center;
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 15px;
+  }
+
+  #countdown-content-name{
+    font-size: 20px !important;
+    font-weight: bold;
+  }
+
+  #countdown-content-phone{
+    font-weight: bold;
+  }
+
+  #countdown-buttons{
+    position: absolute;
+    bottom: 0px;
+    display: table;
+    width: 100%;
+    height: 80px;
+    padding: 0 10px 0 10px;
+  }
+
+  #countdown-buttons-ok, #countdown-buttons-cancel{
+    display: table-cell;
+    width: 50%;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .button{    
+    border: 2px solid #35495e;
+    background-color: #35495e;
+    width: 80%;
+    height: 35px;
+    text-align: center;
+    text-decoration: none;
+    color: #41b883;
+    display: inline-block;
+    font-weight: bold;    
+    font-size: 16px;
+    border-radius: 3px;
+
+    box-shadow: 0px 1px 2px 1px #6b6b6bc7;
+  }
+
+  .noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+  }
+
+  .noclick {
+    pointer-events: none;
+  }
+
+  </style>
+  <title>apptaixe</title>
+</head>
+
+<body>
+  <div id="app">
+    <div id="navbar">
+      <button id="hamburger-button">
+        <img src="./src/assets/image/hamburger-white.png" style="width: 24px; height:24px">
+      </button>
+    </div>
+    
+    <div id="hamburger-menu">
+      <div id="avatar-background">
+        <div id="avatar-background-back"></div>
+        <div id="avatar-background-front"></div>
+
+        <div id="avatar">
+          <img src="./src/assets/image/avatar.jpg" style="width: 60px; height: 60px">
+        </div>
+      </div>
+
+
+      <div id="hamburger-menu-items">
+        <div class="hamburger-menu-item">
+          <div class="hamburger-menu-item-icon">
+            <img src="./src/assets/image/logout.png" style="width: 18px; height: 18px;">
+          </div>
+          <div class="hamburger-menu-item-context">
+            Đăng xuất
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
+    <div id="hamburger-menu-back"></div>
+
+    <div id="map"></div>
+
+    <div id="countdown">
+      <div id="countdown-text">5</div>
+      <svg width="160" height="160">
+        <g>
+          <circle id="circle-inside" r="62" cy="80" cx="80" stroke-width="4" stroke="#35495e" fill="none"/>
+          <circle id="circle" class="circle_animation" r="70" cy="80" cx="80" stroke-width="13" stroke="#41b883" fill="none"/>
+        </g>
+      </svg>
+      <div id="countdown-content" class="noselect">
+        <div id="countdown-content-name">
+          Sheikou Akiyoshi
+        </div>
+        <div id="countdown-content-address">
+          123 Nguyễn Văn Cừ, xã Thất Thảo, huyện Mộc La, Thành phố HCM
+        </div>
+        <div id="countdown-content-phone">
+          0123456789
+        </div>
+      </div>
+      <div id="countdown-buttons">
+        <div id="countdown-buttons-ok">
+          <button id="btnOK" class="button">Chấp nhận</button>
+        </div>
+        <div id="countdown-buttons-cancel">
+          <button id="btnCancel" type="submit" class="button">Từ chối</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- built files will be auto injected -->
+  <script src="./src/assets/js/jquery-3.2.1.min.js"></script>
+  <script src="./src/assets/js/bootstrap.min.js" ></script>
+  <script type="text/javascript">
+    function initMap() {
+      var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          disableDefaultUI: true,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+    }
+    $(document).ready(function() {
+      $('#hamburger-button').click(function() {
+          $('#hamburger-menu').addClass("hamburger-menu-expanded");
+          $('#hamburger-menu-back').addClass("hamburger-menu-back-actived");
+
+      });
+
+      $('#hamburger-menu-back').click(function() {
+          $('#hamburger-menu').removeClass("hamburger-menu-expanded");
+          $('#hamburger-menu-back').removeClass("hamburger-menu-back-actived");
+
+      });
+
+      $('#btnOK').click(function() {
+        //countdown
+        var time = 5;
+        var initialOffset = '440';
+        var i = 0;
+
+        var interval = setInterval(function() {
+            $('#countdown-text').text((5-i));
+            if (i == time) {    
+              clearInterval(interval);
+              i = 0;
+              $('.circle_animation').css('stroke-dashoffset', 0);
+              $('#countdown-text').text((5-i));
+              return;
+            }
+            $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
+            i++;  
+        }, 1000);
+
+        //end countdown
+      });
+
+    });
+  </script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOZTu3oQQZuepU7XDCVKL1KxPShXeQoMc&callback=initMap""></script>
+
+</body>
+
+</html>

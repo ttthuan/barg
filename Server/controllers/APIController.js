@@ -135,7 +135,7 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                                         var i = 0;
                                         var Solan = listDriver.length > N ? N:listDriver.length;
                                         var postData = {
-                                            statusfordriver: 1
+                                            statusfordriver: 6
                                         };
 
                                         var updates = {};

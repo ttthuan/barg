@@ -70,7 +70,7 @@ router.post('/finddrivernearest', function (req, res) {
                             var i = 0;
                             var Solan = listDriver.length > N ? N:listDriver.length;
                             var postData = {
-                                statusfordriver: 1
+                                statusfordriver: 6
                             };
 
                             var updates = {};
