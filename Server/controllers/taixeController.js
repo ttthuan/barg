@@ -50,6 +50,11 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
                     driver.update({
                         statusfordriver: 2
                     });
+                    //Update trang thai request cua khach hang 
+                    var requestref = ref.child(_customer).child("request");
+                    requestref.update({
+                        statusforreq: 4
+                    });
                     //Update cho tai xe
                     var driverref = firebase.app().database().ref("drivers");
                     driverref.once("value")
@@ -235,6 +240,51 @@ router.post('/finddrivernearest', function (req, res) {
     });
 
     res.json('success');
+});
+//API Bat Dau Cho Khach
+router.get('/start/:customer/', function (req, res) {
+    var _customer = req.params.customer;
+
+    var ref = firebase.app().database().ref("customers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((customer) => {
+                if (customer.key == _customer) {
+                    var driver = ref.child(_customer).child("request");
+                    driver.update({
+                        statusforreq: 5
+                    });
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
+});
+
+
+//Api Kết thúc chở khách
+router.get('/stop/:customer/:driver', function (req, res) {
+    var _customer = req.params.customer;
+    var _driver = req.params.driver;
+    var ref = firebase.app().database().ref("customers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((customer) => {
+                if (customer.key == _customer) {
+                    var driver = ref.child(_customer).child("request");
+                    driver.update({
+                        statusforreq: 6 // đã hoàn thành
+                    });
+                    // update trạng thái tài xế
+                    var driverref = firebase.app().database().ref("drivers").child(_driver);
+                    driverref.update({
+                        statusfordriver: 3 // đang sẵn sàng
+                    });
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
 });
 
 module.exports = router;
