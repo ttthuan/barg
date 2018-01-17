@@ -44,21 +44,21 @@
       </svg>
       <div id="countdown-content" class="noselect">
         <div id="countdown-content-name">
-          Sheikou Akiyoshi
+          {{customerName}}
         </div>
         <div id="countdown-content-address">
-          123 Nguyễn Văn Cừ, xã Thất Thảo, huyện Mộc La, Thành phố HCM
+          {{customerAddress}}
         </div>
         <div id="countdown-content-phone">
-          0123456789
+          {{customerPhone}}
         </div>
       </div>
       <div id="countdown-buttons">
         <div id="countdown-buttons-ok">
-          <button id="btnOK" class="button">Chấp nhận</button>
+          <button id="btnOK" class="button" v-on:click="AppceptCustomer">Chấp nhận</button>
         </div>
         <div id="countdown-buttons-cancel">
-          <button id="btnCancel" type="submit" class="button">Từ chối</button>
+          <button id="btnCancel" type="submit" class="button" v-on:click="RejectCustomer">Từ chối</button>
         </div>
       </div>
     </div>
@@ -78,7 +78,11 @@ export default {
       map: null,
       markers:[],
       bounds: null,
-      showCounter: true,
+      showCounter: false,
+      customerName: null,
+      customerPhone: null,
+      customerAddress: null,
+      driverUser: null,
     }
   },
 
@@ -95,28 +99,82 @@ export default {
 
     self.bounds = new google.maps.LatLngBounds();
 
-    
+    self.ListenOnDriver();
   },
 
   methods: {
     loadCounter(e){
-        var time = 5;
-        var initialOffset = '440';
-        var i = 0;
+      var time = 5;
+      var initialOffset = '440';
+      var i = 0;
 
-        var interval = setInterval(function() {
-            $('#countdown-text').text((5-i));
-            if (i == time) {    
-              clearInterval(interval);
-              $('.circle_animation').css('stroke-dashoffset', 0);
-              return;
-            }
-            $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
-            i++;  
-        }, 1000);
+      var interval = setInterval(function() {
+          $('#countdown-text').text((5-i));
+          if (i == time) {    
+            clearInterval(interval);
+            $('.circle_animation').css('stroke-dashoffset', 0);
+            return;
+          }
+          $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
+          i++;  
+      }, 1000);
 
-      },
+    },
+
+    ListenOnDriver(){
+      var self = this;
+      var userDiver = localStorage.auth_driver;
+      self.driverUser = userDiver;
+
+      if(userDiver){
+        var driverRef = firebase.database().ref('drivers/' + userDiver);
+        driverRef.on('value', function(driver){
+          console.log('listen on driver ' + driver.key);
+          if(driver.child('mycustomer').numChildren() > 0){
+            self.ShowInforCustomer(driver.child('mycustomer').child('address').val(), driver.child('mycustomer').child('name').val(), driver.child('mycustomer').child('phone').val());
+          }
+        });
+      }else{
+        self.$router.push('/login');
+      }
+      
+    },
+
+    ShowInforCustomer(name, phone, address){
+      var self = this;
+      self.showCounter = true;
+      self.customerName = name;
+      self.customerPhone = phone;
+      self.customerAddress = address;
+    },
+
+    AppceptCustomer(){
+      var self = this;
+      ///confirmcustomer/:customer/:driver'
+      if(self.customerPhone && )
+      var url = `https://barg-server.herokuapp.com/taixe/confirmcustomer/${self.customerPhone}/${self.driverUser}`;
+      axios.get(url)
+      .then(function(response){
+        
+      })
+      .catch(function(error){
+
+      });
+    },
+
+    RejectCustomer(){
+
+    }
+
   },
+
+  watch: {
+    '$route'(to, from){
+      //console.log(to.params.address);
+      //console.log(to.params.phone);
+      this.ListenOnDriver();
+    }
+  }
 
 }
 </script>

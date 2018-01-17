@@ -25,7 +25,13 @@ var config = {
 firebase.initializeApp(config);
 
 const routes = [
-  { path: '/', component: Index },
+  { 
+    path: '/', 
+    component: Index,
+    meta:{
+      requireAuth: true
+    }
+  },
   { path: '/login', component: Login },
 ];
 
@@ -34,9 +40,26 @@ const router = new VueRouter({routes});
 
 Vue.config.productionTip = false;
 
+
+router.beforeEach((to, from, next)=>{
+  var r = to.matched.some(record => record.meta.requireAuth);
+  console.log("requireAuth " + r);
+  if(r == true){
+    var user = localStorage.auth_driver;
+    console.log("localStorage " + user);
+    if(!user){
+      console.log("login");
+      next('/login');
+    }
+  }
+  next();
+});
+
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',
     router,
     render: h => h(App)
 });
+

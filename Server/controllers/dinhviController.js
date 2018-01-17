@@ -1,9 +1,8 @@
 var express = require('express');
+var firebase = require('../configs/FirebaseConfig');
 
 var router = express.Router();
 // init firebae
-var firebase = require('../configs/FirebaseConfig');
-
 
 // chon tai xe cho khach
 router.get('/choosedriver/:customer/:driver', function (req, res) {

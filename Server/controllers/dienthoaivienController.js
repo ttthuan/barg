@@ -1,10 +1,12 @@
 var express = require('express');
-var router = express.Router();
+
 // init firebae
 var firebase = require('../configs/FirebaseConfig');
 
 
-// api khách hàng đặt xe
+var router = express.Router();
+
+
 router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq', function (req, res) {
     var phone = req.params.phone;
     var name1 = req.params.name;

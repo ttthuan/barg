@@ -210,7 +210,7 @@ export default {
         }
       });
 
-      axios.post('https://barg-server.herokuapp.com/driver/finddrivernearest', {
+      axios.post('https://barg-server.herokuapp.com/taixe/finddrivernearest', {
         phone: phone,
         lat: self.lat,
         lng: self.lng
@@ -231,8 +231,8 @@ export default {
 
       var addressold = self.GetValue(phone, 'addressold');
       //console.log('point located '+addressold);
-      axios.post('https://barg-server.herokuapp.com/driver/located', {
-        address:addressold,
+      axios.post('https://barg-server.herokuapp.com/dinhvi/located', {
+        address: addressold,
         lat: self.lat,
         lng: self.lng
       })
@@ -245,7 +245,7 @@ export default {
     },
 
     CallApiRequestDriver(phone, driver){
-      var url = `https://barg-server.herokuapp.com/api/choosedriver/${phone}/${driver}`;
+      var url = `https://barg-server.herokuapp.com/dinhvi/choosedriver/${phone}/${driver}`;
       axios.get(url)
       .then(function(response){
         console.log("call api request driver success");

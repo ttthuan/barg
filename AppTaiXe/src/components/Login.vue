@@ -5,26 +5,26 @@
     </div>
 
     <div id="login">
-          <div class="template-input">
-            <div class="textboxD">
-              <input id="txtID" type="text" name="id" class="textbox" placeholder="Tài khoản">
-              <hr id="txtID-border">
-            </div>
-          </div>
+      <div class="template-input">
+        <div class="textboxD">
+          <input id="txtID" type="text" name="id" class="textbox" placeholder="Tài khoản" v-model="username" v-on:click="clearPassWrong">
+          <hr id="txtID-border">
+        </div>
+      </div>
 
-          <div class="template-input">
-            <div class="textboxD">
-              <input id="txtPW" type="text" name="pw" class="textbox" placeholder="Mật khẩu">
-              <hr id="txtPW-border">
-            </div>
-          </div>
+      <div class="template-input">
+        <div class="textboxD">
+          <input id="txtPW" type="text" name="pw" class="textbox" placeholder="Mật khẩu" v-model="password" v-on:click="clearPassWrong">
+          <hr id="txtPW-border">
+        </div>
+      </div>
+      <div v-show="showPasswordWrong">username or pass wrong</div>
 
-
-          <div class="template-input">
-            <div class="textboxD">
-              <input type="submit" value="Đăng Nhập" class="button">
-            </div>
-          </div>
+      <div class="template-input">
+        <div class="textboxD">
+          <input type="button" value="Đăng Nhập" class="button" v-on:click="login">
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -32,15 +32,42 @@
 <script>
 
 import firebase from 'firebase';
+import axios from 'axios';
 
 export default {
   name: 'Login',
   data () {
     return {
+      username: null,
+      password: null,
+      showPasswordWrong: false,
     }
   },
   methods:{
-    
+    login(){
+      var self = this;
+      console.log("login " + self.username + ' ' + self.password);
+
+      if(self.username && self.password){
+        var url = `https://barg-server.herokuapp.com/taixe/login/${self.username}/${self.password}`;
+        axios.get(url)
+        .then(function(response){
+          console.log(response);
+          localStorage.auth_driver = self.username;
+          self.$router.push('/');
+        })
+        .catch(function(error){
+          console.log(error);
+          self.showPasswordWrong = true;
+        });
+      }
+
+    },
+
+    clearPassWrong(){
+      var self = this;
+      self.showPasswordWrong = false;
+    }
   }
 }
 </script>
@@ -51,7 +78,6 @@ html,
   body {
     min-height: 100%;
     height: 100%;
-
   }
 
   html {

@@ -1,9 +1,10 @@
 var express = require('express');
-var router = express.Router();
+
+var firebase = require('../configs/FirebaseConfig');
+var DriectionAPI = require('../configs/GoogleMap');
 var util = require('util');
 
-// init firebae
-var firebase = require('../configs/FirebaseConfig');
+var router = express.Router();
 
 
 //kiem tra dang nhap tai xe
@@ -16,7 +17,7 @@ router.get('/login/:username/:password', function (req, res) {
         .then(function (snap) {
             var sucess = false;
             snap.forEach((driver) => {
-                if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
+                if (driver.key == _username && driver.child('password').val() == _password) {
                     var status = ref.child(driver.key);
                     status.update({
                         statusfordriver: 3
@@ -28,7 +29,7 @@ router.get('/login/:username/:password', function (req, res) {
                 }
             });
             if (sucess == false) {
-                res.statusCode = 504;
+                res.statusCode = 401;
                 res.json("Đăng nhập thất bại");
                 return;
             }
