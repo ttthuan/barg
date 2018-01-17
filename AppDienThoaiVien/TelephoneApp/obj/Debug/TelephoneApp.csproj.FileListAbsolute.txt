@@ -1,96 +1,39 @@
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.exe.config
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.exe
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.pdb
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.FrmMain.resources
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.Properties.Resources.resources
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csproj.GenerateResource.Cache
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csproj.CoreCompileInputs.cache
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.exe
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.pdb
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\bin\Debug\Newtonsoft.Json.dll
-C:\Users\Totoro\Desktop\TelephoneApp\TelephoneApp\bin\Debug\Newtonsoft.Json.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.exe.config
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.exe
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.pdb
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\Newtonsoft.Json.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\Newtonsoft.Json.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.FrmMain.resources
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.Properties.Resources.resources
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csproj.GenerateResource.Cache
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csproj.CoreCompileInputs.cache
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.exe
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.pdb
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\Firebase.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\Microsoft.Win32.Primitives.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.AppContext.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Console.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Diagnostics.DiagnosticSource.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Globalization.Calendars.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.IO.Compression.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.IO.Compression.ZipFile.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.IO.FileSystem.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.IO.FileSystem.Primitives.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Net.Http.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Net.Sockets.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Core.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Interfaces.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Linq.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Security.Cryptography.Algorithms.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Security.Cryptography.Encoding.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Security.Cryptography.Primitives.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Security.Cryptography.X509Certificates.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Xml.ReaderWriter.dll
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Diagnostics.DiagnosticSource.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Core.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Interfaces.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml
-F:\HocTap\Truong_KHTN\LienThong16HCB1642074\HK3\CacCongNgheLapTrinhHienDai\DoAn\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.RequestItem.resources
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.exe.config
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.exe
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.pdb
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\Firebase.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\Microsoft.Win32.Primitives.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\Newtonsoft.Json.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.AppContext.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Console.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Diagnostics.DiagnosticSource.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Globalization.Calendars.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.IO.Compression.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.IO.Compression.ZipFile.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.IO.FileSystem.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.IO.FileSystem.Primitives.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Net.Http.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Net.Sockets.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Core.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Interfaces.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Linq.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Security.Cryptography.Algorithms.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Security.Cryptography.Encoding.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Security.Cryptography.Primitives.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Security.Cryptography.X509Certificates.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Xml.ReaderWriter.dll
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\Newtonsoft.Json.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Diagnostics.DiagnosticSource.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Core.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Interfaces.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.FrmMain.resources
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.Properties.Resources.resources
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.RequestItem.resources
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.GenerateResource.Cache
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.CoreCompileInputs.cache
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.exe
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.pdb
-F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.exe.config
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.exe
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\TelephoneApp.pdb
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MaterialDesignColors.dll
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MaterialDesignThemes.Wpf.dll
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MaterialDesignThemes.Wpf.pdb
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MaterialDesignThemes.Wpf.xml
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\MainWindow.g.cs
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\App.g.cs
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp_MarkupCompile.cache
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp_MarkupCompile.lref
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\App.baml
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\MainWindow.baml
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.g.resources
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.Properties.Resources.resources
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.csproj.GenerateResource.Cache
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.exe
+c:\users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp.pdb
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MahApps.Metro.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MahApps.Metro.pdb
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\MahApps.Metro.xml
+C:\Users\mjnht\OneDrive\Documents\Visual Studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\obj\Debug\TelephoneApp_Content.g.cs
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\Firebase.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Core.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Interfaces.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Linq.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Core.xml
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Interfaces.xml
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
+C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml

@@ -56,6 +56,7 @@
         </div>
       </div>
 
+
       <div class="list-item noselect list-item-located" v-else @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
@@ -81,6 +82,7 @@
           </div>
         </div>
       </div>
+
 
     </div>
   </div>
@@ -159,6 +161,7 @@ export default {
           //console.log("id: "+id);
           var address = itemActive[0].childNodes[2].childNodes[2].innerText;
           var self = this;
+          self.$router.push('/' + id);
 
           var dinhviUser = localStorage.auth_dinhvivien;
 
