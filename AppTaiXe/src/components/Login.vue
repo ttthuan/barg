@@ -1,31 +1,30 @@
 <template>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3 class="panel-title">Login</h3>
+  <div id="app">
+    <div id="logo" class="noselect">
+      <img src="../../src/assets/logo.png" id="img-logo">
     </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-6 col-sm-6">
-          <form>
-          <div class="form-group">
-            <label for="user_name">Email</label>
-            <input type="text" class="form-control" id="user_name" placeholder="Email" v-model="txtUsername">
+
+    <div id="login">
+          <div class="template-input">
+            <div class="textboxD">
+              <input id="txtID" type="text" name="id" class="textbox" placeholder="Tài khoản">
+              <hr id="txtID-border">
+            </div>
           </div>
-          <div class="form-group">
-            <label for="pass_word">Password</label>
-            <input type="password" class="form-control" id="pass_word" placeholder="Password" v-model="txtPassword">
+
+          <div class="template-input">
+            <div class="textboxD">
+              <input id="txtPW" type="text" name="pw" class="textbox" placeholder="Mật khẩu">
+              <hr id="txtPW-border">
+            </div>
           </div>
-          
-        
-          <button class="btn btn-primary btn-block" @click="chat">
-            <span class="glyphicon glyphicon-user">
-              
-            </span>
-            Đăng nhập
-          </button>
-        </form>
-        </div>
-      </div>
+
+
+          <div class="template-input">
+            <div class="textboxD">
+              <input type="submit" value="Đăng Nhập" class="button">
+            </div>
+          </div>
     </div>
   </div>
 </template>
@@ -38,44 +37,158 @@ export default {
   name: 'Login',
   data () {
     return {
-      txtUsername: "",
-      txtPassword: "",
     }
   },
   methods:{
-    dangNhap(){
-      var self = this;
-      console.log(self.txtUsername);
-      console.log(self.txtPassword);
-      if(self.txtUsername === 'ttthuan' && self.txtPassword === '123'){
-        localStorage.auth_user = self.txtUsername;
-        self.txtUsername = "";
-        self.txtPassword = "";
-        self.$router.push("/profile");
-      }else{
-        alert('ffff');
-      }
-    },
-    chat(){
-      var self = this;
-      console.log(firebase);
-      var database = firebase.database();
-
-      var entryContent = {
-        email: self.txtUsername,
-        text: self.txtPassword
-      };
-
-      var newPostKey = database.ref().child('contents').push().key;
-      var myDataRef = {};
-      myDataRef['/contents/' + newPostKey] = entryContent;
-      database.ref().update(myDataRef);
-    }
+    
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+html,
+  body {
+    min-height: 100%;
+    height: 100%;
 
+  }
+
+  html {
+    overflow-y: hidden;
+  }
+
+  hr{
+    position: absolute;
+    border-top: 2px solid #41b883;
+    bottom: 0px;
+    transition: 0.15s ease-out;
+    width: 0%;
+    left: 50%;   
+    margin: 0px;
+  }
+
+  .fill {
+    min-height: 100%;
+    height: 100%;
+  }
+
+  .vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+  }
+
+  #app{
+    min-height: 100%;
+    height: 100%;
+    background-color: #bba7df;
+    position: relative;
+  }
+
+  #logo{
+    width: 100%;
+    height: 50%;
+    position: relative;
+  }
+
+  #login{
+    position: relative;
+    top: 50px;
+  }
+
+  .textbox{
+    border-width: 0px;
+    height: 35px;
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 3px 10px 0 10px;
+    color: #303c48;
+
+    box-shadow: 0px 2px 5px 1px #6b6b6bc7;
+  }
+
+  .textbox-active{
+    left: 0%;
+    width: 100%;
+  }
+
+  .template-input{
+    margin: 8px;
+  }
+
+  .textboxD{
+    height: 35px;
+    width: 70%;
+    position: relative;
+    left: 15%;
+  }
+
+  .button{    
+    border: 2px solid #35495e;
+    background-color: #35495e;
+    width: 100%;
+    height: 35px;
+    text-align: center;
+    text-decoration: none;
+    color: #41b883;
+    display: inline-block;
+    font-weight: bold;    
+    font-size: 16px;
+    border-radius: 3px;
+
+    box-shadow: 0px 2px 5px 1px #6b6b6bc7;
+  }
+
+  #img-logo
+  {
+    border-radius: 100px;
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    overflow: hidden;
+    /*left: 50%;*/
+    /* Firefox */
+    left: -moz-calc(50% - 79px);
+    /* WebKit */
+    left: -webkit-calc(50% - 79px);
+    /* Opera */
+    left: -o-calc(50% - 79px);
+    /* Standard */
+    left: calc(50% - 79px);
+
+    /* Firefox */
+    top: -moz-calc(45%);
+    /* WebKit */
+    top: -webkit-calc(45%);
+    /* Opera */
+    top: -o-calc(45%);
+    /* Standard */
+    top: calc(45%);
+  }
+
+  .noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                      supported by Chrome and Opera */
+  }
+
+  .noclick {
+    pointer-events: none;
+  }
 </style>

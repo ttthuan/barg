@@ -10,7 +10,6 @@ import App from './App';
 // router components
 import Index from './components/Index.vue';
 import Login from './components/Login.vue';
-import MapDinhVi from './components/MapDinhVi.vue';
 
 Vue.use(VueRouter);
 
@@ -28,7 +27,6 @@ firebase.initializeApp(config);
 const routes = [
   { path: '/', component: Index },
   { path: '/login', component: Login },
-  { path: '/:phone', component: Index },
 ];
 
 const router = new VueRouter({routes});
