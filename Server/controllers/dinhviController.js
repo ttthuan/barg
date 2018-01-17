@@ -99,4 +99,29 @@ router.get('/', function(req, res){
     res.json("test api driver");
 });
 
+//api kiểm tra đăng nhập cho định vị viên
+router.get('/login/:username/:password', function (req, res) {
+    var _username = req.params.username;
+    var _password = req.params.password;
+
+    var ref = firebase.app().database().ref("employees").child("nhanviendinhvi");
+    ref.once("value")
+        .then(function (snap) {
+            var sucess = false;
+            snap.forEach((employee) => {
+                if (employee.key == _username && employee.child('password').val() == _password) {
+                    sucess = true;
+                    res.statusCode = 200;
+                    res.json("Đăng nhập thành công");
+                    return;
+                }
+            });
+            if (sucess == false) {
+                res.statusCode = 401;
+                res.json("Đăng nhập thất bại");
+                return;
+            }
+        });
+});
+
 module.exports = router;
