@@ -89,11 +89,14 @@ export default {
       directionsService: null,
       directionsDisplay: null,
       customerLocation: null,
+      timeOut: null,
     }
   },
 
   mounted() {
     var self = this;
+
+    self.markers = [];
     self.key = 'AIzaSyArPtL7gTh6ZIN0LNS4fiC7j_HjKkK3-kA';
     const element = document.getElementById(this.mapName);
     const options = {
@@ -123,6 +126,7 @@ export default {
 
   methods: {
     loadCounter(){
+      var self = this;
       var time = 5;
       var initialOffset = '440';
       var i = 0;
@@ -133,6 +137,7 @@ export default {
             clearInterval(interval);
             $('.circle_animation').css('stroke-dashoffset', 0);
             // call reject
+            self.RejectCustomer();
             return;
           }
           $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
@@ -154,6 +159,8 @@ export default {
             self.ShowInforCustomer(mycustomer.child('name').val(), mycustomer.child('phone').val(), mycustomer.child('address').val());
           }
         });
+
+        self.timeOut = setInterval(self.fiveSecon, 5000);
       }else{
         self.$router.push('/login');
       }
@@ -206,7 +213,20 @@ export default {
     },
 
     RejectCustomer(){
+      var self = this;
+      // unconfirmcustomer/:customer/:driver
+      self.showCounter = false;
+      if(self.customerPhone && self.driverUser){
+        var url = `https://barg-server.herokuapp.com/taixe/unconfirmcustomer/${self.customerPhone}/${self.driverUser}`;
+        axios.get(url)
+        .then(function(response){
 
+        })
+        .catch(function(error){
+          console.log('lỗi từ chối khách hàng ' + error);
+        });
+      }
+      
     },
 
     showPosition(position){
@@ -275,6 +295,11 @@ export default {
         lat: lat,
         lng: lng
       });
+    },
+
+    fiveSecon(){
+      var self = this;
+      //console.log('second');
     }
 
   },

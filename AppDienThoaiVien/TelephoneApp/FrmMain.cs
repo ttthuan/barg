@@ -234,7 +234,7 @@ namespace TelephoneApp
         public async Task<HttpResponseMessage> SendCustomerToServer(String[] ds)
         {
             // customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq
-            HttpResponseMessage response = await HTTP_CLIENT.GetAsync(String.Format("api/customers/{0}/{1}/{2}/{3}/{4}/{5}", ds[0], ds[1], ds[2], ds[3], ds[4], ds[5]));
+            HttpResponseMessage response = await HTTP_CLIENT.GetAsync(String.Format("dienthoaivien/customers/{0}/{1}/{2}/{3}/{4}/{5}", ds[0], ds[1], ds[2], ds[3], ds[4], ds[5]));
 
             return response;
         }

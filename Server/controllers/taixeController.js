@@ -156,6 +156,12 @@ router.post('/finddrivernearest', function (req, res) {
     var listDriver = [];
     var lenDriver = 0;
 
+    // thay đổi trạng thái đã định vị cho request
+    var requestRef = firebase.database().ref('customers/' + phone + '/request');
+    requestRef.update({
+        statusforreq: 2
+    })
+
     var numberNRef = firebase.database().ref('configs/constants/n');
     numberNRef.once('value', function(n){
         //console.log("DEBUG " + "number N " + n.val());
