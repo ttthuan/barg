@@ -283,16 +283,22 @@ router.get('/stop/:customer/:driver', function (req, res) {
                       
                       var historyRef = refHistories.child(newPostKey);
                       historyRef.push(newPostKey);
-
                       var update = {};
-                      var newMycustomer = {
-                          phone: customer.key,
-                          address: customer.child('request').val().addressold,
-                          name: customer.val().name
-                      };
-
-                      update[newPostKey] = newMycustomer                     
-                      refHistories.update(update);
+                      var newRequest = {
+                          address: customer.child('request').val().address,
+                          addressold: customer.child('request').val().addressold,
+                          drivers: customer.child('request').val().drivers,
+                          statusforreq: customer.child('request').val().statusforreq,
+                          timereq: customer.child('request').val().timereq,
+                          typeofcar: customer.child('request').val().typeofcar
+                      }
+                      update[newPostKey] = newRequest;                     
+                      (refHistories.update(update)).then((r)=>{
+                        var reset = ref.child(_customer);
+                        reset.update({
+                            request:"null"
+                        });
+                      });
 
                     // update trạng thái tài xế
                     var driverref = firebase.app().database().ref("drivers").child(_driver);
