@@ -6,7 +6,7 @@
       </button>
     </div>
     
-    <div id="hamburger-menu">
+    <div id="hamburger-menu" class="noselect">
       <div id="avatar-background">
         <div id="avatar-background-back"></div>
         <div id="avatar-background-front"></div>
@@ -14,11 +14,34 @@
         <div id="avatar">
           <img src="../../src/assets/image/avatar.jpg" style="width: 60px; height: 60px">
         </div>
+
+        <div id="name">
+          Trịnh Thanh Thuận
+        </div>
       </div>
 
 
       <div id="hamburger-menu-items">
-        <div class="hamburger-menu-item">
+        <div class="hamburger-menu-item noselect hamburger-menu-item-disable">
+          <div class="hamburger-menu-item-icon">
+            <img src="../../src/assets/image/clock-start.png" style="width: 18px; height: 18px;">
+          </div>
+          <div class="hamburger-menu-item-context">
+            Bắt đầu
+          </div>
+        </div>
+        <div class="hamburger-menu-item noselect hamburger-menu-item-disable">
+          <div class="hamburger-menu-item-icon">
+            <img src="../../src/assets/image/clock-end.png" style="width: 18px; height: 18px;">
+          </div>
+          <div class="hamburger-menu-item-context">
+            Kết thúc
+          </div>
+        </div>
+        <div class="hamburger-menu-item noselect noclick">
+          <hr style="margin:5px 0px 5px 0px; border-top: 1px solid #dedede">
+        </div>
+        <div class="hamburger-menu-item noselect">
           <div class="hamburger-menu-item-icon">
             <img src="../../src/assets/image/logout.png" style="width: 18px; height: 18px;">
           </div>
