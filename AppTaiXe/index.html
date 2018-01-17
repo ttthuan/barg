@@ -43,7 +43,7 @@
 
   }
 
-  #map
+  #googlemap
   {
     height: 100vh;
   }
@@ -304,92 +304,15 @@
 </head>
 
 <body>
-  <div id="app">
-    <div id="navbar">
-      <button id="hamburger-button">
-        <img src="./src/assets/image/hamburger-white.png" style="width: 24px; height:24px">
-      </button>
-    </div>
-    
-    <div id="hamburger-menu">
-      <div id="avatar-background">
-        <div id="avatar-background-back"></div>
-        <div id="avatar-background-front"></div>
-
-        <div id="avatar">
-          <img src="./src/assets/image/avatar.jpg" style="width: 60px; height: 60px">
-        </div>
-      </div>
-
-
-      <div id="hamburger-menu-items" class="noselect">
-        <div class="hamburger-menu-item">
-          <div class="hamburger-menu-item-icon">
-            <img src="./src/assets/image/logout.png" style="width: 18px; height: 18px;">
-          </div>
-          <div class="hamburger-menu-item-context">
-            Đăng xuất
-          </div>
-        </div>
-      </div>
-  
-    </div>
-
-    <div id="hamburger-menu-back"></div>
-
-    <div id="map"></div>
-
-    <div id="countdown">
-      <div id="countdown-text">5</div>
-      <svg width="160" height="160">
-        <g>
-          <circle id="circle-inside" r="62" cy="80" cx="80" stroke-width="4" stroke="#35495e" fill="none"/>
-          <circle id="circle" class="circle_animation" r="70" cy="80" cx="80" stroke-width="13" stroke="#41b883" fill="none"/>
-        </g>
-      </svg>
-      <div id="countdown-content" class="noselect">
-        <div id="countdown-content-name">
-          Sheikou Akiyoshi
-        </div>
-        <div id="countdown-content-address">
-          123 Nguyễn Văn Cừ, xã Thất Thảo, huyện Mộc La, Thành phố HCM
-        </div>
-        <div id="countdown-content-phone">
-          0123456789
-        </div>
-      </div>
-      <div id="countdown-buttons">
-        <div id="countdown-buttons-ok">
-          <button id="btnOK" class="button">Chấp nhận</button>
-        </div>
-        <div id="countdown-buttons-cancel">
-          <button id="btnCancel" type="submit" class="button">Từ chối</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+  <div id="app"></div>
   <!-- built files will be auto injected -->
   <script src="./src/assets/js/jquery-3.2.1.min.js"></script>
   <script src="./src/assets/js/bootstrap.min.js" ></script>
   <script type="text/javascript">
-    function initMap() {
-      var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          disableDefaultUI: true,
-          center: uluru
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        });
-    }
     $(document).ready(function() {
       $('#hamburger-button').click(function() {
           $('#hamburger-menu').addClass("hamburger-menu-expanded");
           $('#hamburger-menu-back').addClass("hamburger-menu-back-actived");
-
       });
 
       $('#hamburger-menu-back').click(function() {
@@ -398,29 +321,9 @@
 
       });
 
-      $('#btnOK').click(function() {
-        //countdown
-        var time = 5;
-        var initialOffset = '440';
-        var i = 0;
-
-        var interval = setInterval(function() {
-            $('#countdown-text').text((5-i));
-            if (i == time) {    
-              clearInterval(interval);
-              $('.circle_animation').css('stroke-dashoffset', 0);
-              return;
-            }
-            $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
-            i++;  
-        }, 1000);
-
-        //end countdown
-      });
-
     });
   </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOZTu3oQQZuepU7XDCVKL1KxPShXeQoMc&callback=initMap""></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTEqhWlTQBP2k_PdrhrDh44U6xjWBaQc0"></script>
 
 </body>
 

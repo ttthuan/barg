@@ -2,7 +2,7 @@
   <div class="map-container">
     <div id="floating-panel">
       <button type="button" class="btn btn-primary" v-on:click="ShowDriverNearLest">
-        <span class="glyphicon glyphicon-ok"></span>
+        <span class="glyphicon glyphicon-screenshot"></span>
       </button>
     </div>
     <div class="google-map" :id="mapName"></div>
@@ -28,6 +28,7 @@ export default {
       lng: null,
       driversRef:[],
       driverMarker:[],
+      geocoder: null
     }
 
   },
@@ -38,6 +39,7 @@ export default {
     const element = document.getElementById(this.mapName);
     const options = {
       zoom: 14,
+      disableDefaultUI: true,
       center: new google.maps.LatLng(51.501527,-0.1921837)
     };
     
@@ -210,7 +212,7 @@ export default {
         }
       });
 
-      axios.post('https://barg-server.herokuapp.com/driver/finddrivernearest', {
+      axios.post('https://barg-server.herokuapp.com/taixe/finddrivernearest', {
         phone: phone,
         lat: self.lat,
         lng: self.lng
@@ -231,8 +233,8 @@ export default {
 
       var addressold = self.GetValue(phone, 'addressold');
       //console.log('point located '+addressold);
-      axios.post('https://barg-server.herokuapp.com/driver/located', {
-        address:addressold,
+      axios.post('https://barg-server.herokuapp.com/dinhvi/located', {
+        address: addressold,
         lat: self.lat,
         lng: self.lng
       })
@@ -245,7 +247,7 @@ export default {
     },
 
     CallApiRequestDriver(phone, driver){
-      var url = `https://barg-server.herokuapp.com/api/choosedriver/${phone}/${driver}`;
+      var url = `https://barg-server.herokuapp.com/dinhvi/choosedriver/${phone}/${driver}`;
       axios.get(url)
       .then(function(response){
         console.log("call api request driver success");

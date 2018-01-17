@@ -1,120 +1,296 @@
 <template>
-  <div class="google-map" :id="mapName"></div>
+  <div>
+    <div id="navbar">
+      <button id="hamburger-button">
+        <img src="../../src/assets/image/hamburger-white.png" style="width: 24px; height:24px">
+      </button>
+    </div>
+    
+    <div id="hamburger-menu">
+      <div id="avatar-background">
+        <div id="avatar-background-back"></div>
+        <div id="avatar-background-front"></div>
+
+        <div id="avatar">
+          <img src="../../src/assets/image/avatar.jpg" style="width: 60px; height: 60px">
+        </div>
+      </div>
+
+
+      <div id="hamburger-menu-items">
+        <div class="hamburger-menu-item">
+          <div class="hamburger-menu-item-icon">
+            <img src="../../src/assets/image/logout.png" style="width: 18px; height: 18px;">
+          </div>
+          <div class="hamburger-menu-item-context">
+            Đăng xuất
+          </div>
+        </div>
+      </div>
+  
+    </div>
+
+    <div id="hamburger-menu-back"></div>
+
+    <div id="googlemap"></div>
+
+    <div id="countdown" v-show="showCounter">
+      <div id="countdown-text">5</div>
+      <svg width="160" height="160">
+        <g>
+          <circle id="circle-inside" r="62" cy="80" cx="80" stroke-width="4" stroke="#35495e" fill="none"/>
+          <circle id="circle" class="circle_animation" r="70" cy="80" cx="80" stroke-width="13" stroke="#41b883" fill="none"/>
+        </g>
+      </svg>
+      <div id="countdown-content" class="noselect">
+        <div id="countdown-content-name">
+          {{customerName}}
+        </div>
+        <div id="countdown-content-address">
+          {{customerAddress}}
+        </div>
+        <div id="countdown-content-phone">
+          {{customerPhone}}
+        </div>
+      </div>
+      <div id="countdown-buttons">
+        <div id="countdown-buttons-ok">
+          <button id="btnOK" class="button" v-on:click="AppceptCustomer">Chấp nhận</button>
+        </div>
+        <div id="countdown-buttons-cancel">
+          <button id="btnCancel" type="submit" class="button" v-on:click="RejectCustomer">Từ chối</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </template>
 
 <script>
-export default {
-  name: 'Index',
-  data () {
+import firebase from 'firebase';
+import axios from 'axios';
 
+export default {
+  name: 'index',
+  data () {
     return {
-      mapName: 'GoogleMap',
+      mapName: 'googlemap',
       map: null,
       markers:[],
-      bounds: null
+      bounds: null,
+      showCounter: false,
+      customerName: null,
+      customerPhone: null,
+      customerAddress: null,
+      driverUser: null,
+      geocoder: null,
+      key: null,
+      myposition: null,
+      directionsService: null,
+      directionsDisplay: null,
+      customerLocation: null,
     }
-
   },
 
   mounted() {
-
     var self = this;
+    self.key = 'AIzaSyArPtL7gTh6ZIN0LNS4fiC7j_HjKkK3-kA';
     const element = document.getElementById(this.mapName);
     const options = {
       zoom: 14,
       center: new google.maps.LatLng(51.501527,-0.1921837)
     };
-    self.bounds = new google.maps.LatLng(51.501527,-0.1921837);
+    
     self.map = new google.maps.Map(element, options);
     self.geocoder = new google.maps.Geocoder;
 
-    self.GeocodeInGoogle(self.$route.params.address);
+    self.bounds = new google.maps.LatLngBounds();
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          self.showPosition(position.coords);
+        });
+    } else { 
+        
+    }
+
+    self.directionsService = new google.maps.DirectionsService();
+    self.directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+    self.directionsDisplay.setMap(self.map);
+
+    self.ListenOnDriver();
   },
 
   methods: {
+    loadCounter(){
+      var time = 5;
+      var initialOffset = '440';
+      var i = 0;
 
-    GeocodeInGoogle(address){
-      var self = this;
-      self.geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
-
-          self.DeleteAllMarker();
-
-          self.AddNewMarker(results[0].geometry.location);
-
-        } else {
-          console.log('Geocode was not successful for the following reason: ' + status);
-        }
-      });
-    },
-
-    GeocodeLatLng(latLng){
-      var self = this;
-      self.geocoder.geocode({'location': latLng}, function(results, status) {
-        if (status === 'OK') {
-          if (results[0]) {
-            
-            console.log(results[0].formatted_address);
-            
-          } else {
-            //window.alert('No results found');
+      var interval = setInterval(function() {
+          $('#countdown-text').text((5-i));
+          if (i == time) {    
+            clearInterval(interval);
+            $('.circle_animation').css('stroke-dashoffset', 0);
+            // call reject
+            return;
           }
-        } else {
-          //window.alert('Geocoder failed due to: ' + status);
-        }
-      });
+          $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
+          i++;  
+      }, 1000);
+
     },
 
-    MarkerMoveChange(event){
+    ListenOnDriver(){
       var self = this;
-      //console.log(event.latLng);
-      self.GeocodeLatLng(event.latLng);
+      var userDiver = localStorage.auth_driver;
+      self.driverUser = userDiver;
+
+      if(userDiver){
+        var mycustomerRef = firebase.database().ref('drivers/' + self.driverUser +'/mycustomer');
+        mycustomerRef.on('value', function(mycustomer){
+          console.log('listen on mycustomer ' + mycustomer.key);
+          if(mycustomer.numChildren() > 0){
+            self.ShowInforCustomer(mycustomer.child('name').val(), mycustomer.child('phone').val(), mycustomer.child('address').val());
+          }
+        });
+      }else{
+        self.$router.push('/login');
+      }
       
     },
 
-    DeleteAllMarker(){
+    ShowInforCustomer(name, phone, address){
       var self = this;
-      self.markers.forEach(function(marker){
-        marker.setMap(null);
-      })
+      self.showCounter = true;
+      self.customerName = name;
+      self.customerPhone = phone;
+      self.customerAddress = address;
+      self.loadCounter();
     },
 
-    AddNewMarker(location){
+    AppceptCustomer(){
       var self = this;
+      ///confirmcustomer/:customer/:driver'
+      self.showCounter = false;
+      if(self.customerPhone && self.driverUser){
+        var url = `https://barg-server.herokuapp.com/taixe/confirmcustomer/${self.customerPhone}/${self.driverUser}`;
+        axios.get(url)
+        .then(function(response){
+          // hiển thị vị trí của customer
+          self.geocoder.geocode({'address': self.customerAddress}, function(results, status) {
+            if (status == 'OK') {
+              var location = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+              var marker = new google.maps.Marker({
+                map: self.map,
+                draggable: false,
+                position: location
+              });
+
+              self.customerLocation = location;
+              self.bounds.extend(location);
+              self.markers.push(marker);
+              self.map.fitBounds(self.bounds);
+
+              // show đường đi ngắn nhất
+              self.showPath();
+            } else {
+              console.log('Geocode was not successful for the following reason: ' + status);
+            }
+          });
+        })
+        .catch(function(error){
+
+        });
+      }
+    },
+
+    RejectCustomer(){
+
+    },
+
+    showPosition(position){
+      var self = this;
+      var location = new google.maps.LatLng(position.latitude,position.longitude);
+      self.myposition = location;
       var marker = new google.maps.Marker({
         map: self.map,
         draggable: true,
         position: location
       });
 
-      marker.addListener('dragend', function(event){
-        self.MarkerMoveChange(event);
-      });
-
+      self.bounds.extend(location);
       self.markers.push(marker);
       self.map.setCenter(location);
+      marker.addListener('drag', function(){
+        self.updateLocation(marker.getPosition().lat(), marker.getPosition().lng());
+        // tính path lại
+        self.myposition = marker.getPosition();
+      });
+
+      marker.addListener('dragend', function(){
+        self.showPath();
+      });
+      //console.log('location ' + position);
+      self.updateLocation(location.lat(), location.lng());
+    },
+    GeocodeInGoogle(address){
+      var self = this;
+      console.log(address);
+
+      self.geocoder.geocode({'address': address}, function(results, status) {
+        if (status == 'OK') {
+
+          self.lat = results[0].geometry.location.lat();
+          self.lng = results[0].geometry.location.lng();
+          console.log('latlng ' + self.lat + ' ' + self.lng);
+
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+          self.lat = null;
+          self.lng = null;
+        }
+      });
+    },
+
+    showPath(){
+      var self = this;
+      console.log(origin);
+      var request = {
+        origin: self.myposition,
+        destination: self.customerLocation,
+        travelMode: 'DRIVING',
+      };
+      self.directionsService.route(request, function(result, status) {
+        if (status == 'OK') {
+          self.directionsDisplay.setDirections(result);
+        }
+      });
+    },
+
+    updateLocation(lat, lng){
+      var self = this;
+      var locationRef = firebase.database().ref('drivers/' + self.driverUser+'/locations');
+      locationRef.update({
+        lat: lat,
+        lng: lng
+      });
     }
 
   },
 
   watch: {
-
     '$route'(to, from){
       //console.log(to.params.address);
-      //console.log(to.params.key);
-      this.GeocodeInGoogle(to.params.address);
+      //console.log(to.params.phone);
+      this.ListenOnDriver();
     }
-
   }
+
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .google-map {
-    width: 100%;
-    height: 100%;
-    background: gray;
-  }
+  
 </style>
