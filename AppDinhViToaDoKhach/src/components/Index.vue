@@ -2,7 +2,7 @@
   <div class="map-container">
     <div id="floating-panel">
       <button type="button" class="btn btn-primary" v-on:click="ShowDriverNearLest">
-        <span class="glyphicon glyphicon-ok"></span>
+        <span class="glyphicon glyphicon-screenshot"></span>
       </button>
     </div>
     <div class="google-map" :id="mapName"></div>
@@ -38,6 +38,7 @@ export default {
     const element = document.getElementById(this.mapName);
     const options = {
       zoom: 14,
+      disableDefaultUI: true,
       center: new google.maps.LatLng(51.501527,-0.1921837)
     };
     
