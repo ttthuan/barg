@@ -7,22 +7,25 @@
     <div id="login">
       <div class="template-input">
         <div class="textboxD">
-          <input id="txtID" type="text" name="id" class="textbox" placeholder="Tài khoản" v-model="username" v-on:click="clearPassWrong">
+          <input id="txtID" type="text" name="id" class="textbox" placeholder="Tài khoản" v-model="username" v-on:click="clearPassWrong" v-on:focus="activeID" v-on:blur="deactiveID">
           <hr id="txtID-border">
         </div>
       </div>
 
       <div class="template-input">
         <div class="textboxD">
-          <input id="txtPW" type="text" name="pw" class="textbox" placeholder="Mật khẩu" v-model="password" v-on:click="clearPassWrong">
+          <input id="txtPW" type="password" name="pw" class="textbox" placeholder="Mật khẩu" v-model="password" v-on:click="clearPassWrong" v-on:focus="activePW" v-on:blur="deactivePW">
           <hr id="txtPW-border">
         </div>
       </div>
-      <div v-show="showPasswordWrong">username or pass wrong</div>
-
       <div class="template-input">
         <div class="textboxD">
           <input type="button" value="Đăng Nhập" class="button" v-on:click="login">
+        </div>
+      </div>
+      <div class="template-input">
+        <div class="textboxD">
+          <div class="wrongPW noselect" v-show="showPasswordWrong">※ Tài khoản hoặc mật khẩu không đúng!</div>
         </div>
       </div>
     </div>
@@ -40,10 +43,24 @@ export default {
     return {
       username: null,
       password: null,
+      usernameactive: false,
+      passwordactive: false,
       showPasswordWrong: false,
     }
   },
   methods:{
+    activeID: function (event) {
+      $('#txtID-border').addClass("textbox-active");
+    },
+    deactiveID: function (event) {
+      $('#txtID-border').removeClass("textbox-active");
+    },
+    activePW: function (event) {
+      $('#txtPW-border').addClass("textbox-active");
+    },
+    deactivePW: function (event) {
+      $('#txtPW-border').removeClass("textbox-active");
+    },
     login(){
       var self = this;
       console.log("login " + self.username + ' ' + self.password);
@@ -196,6 +213,11 @@ html,
     top: -o-calc(45%);
     /* Standard */
     top: calc(45%);
+  }
+
+  .wrongPW{
+    color: #d1431d;
+    font-weight: bold;
   }
 
   .noselect {
