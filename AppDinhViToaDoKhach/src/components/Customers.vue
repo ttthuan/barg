@@ -152,6 +152,8 @@ export default {
         mySelect(e){
           if (itemActive != null) {
             itemActive.removeClass("list-item-selected");
+            itemActive.attr("id");
+            removeHandling(itemActive.attr("id"));
           }
           itemActive = $(e.target);
           itemActive.addClass("list-item-selected");
@@ -200,6 +202,13 @@ export default {
           var requestRef = firebase.database().ref('customers/'+phone+'/request');
           requestRef.update({
             handling: user
+          })
+        },
+        removeHandling(phone){
+          var self = this;
+          var requestRef = firebase.database().ref('customers/'+phone+'/request');
+          requestRef.update({
+            handling: 'null'
           })
         }
     }
