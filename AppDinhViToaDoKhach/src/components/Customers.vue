@@ -4,7 +4,7 @@
       <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH REQUEST</h4>
     </div>
     <div id="list-area-content">
-      <div class="list-item noselect" v-for="request in listRequest" v-if="request.status == 1 && request.handling == dinhviUser" @click.prevent ="mySelect" @mouseover="myHover" 
+      <div class="list-item noselect" v-for="request in listRequest" v-if="request.status == 1 && request.handling == 'null' && request.handling == dinhviUser" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
@@ -150,10 +150,10 @@ export default {
   },
   methods: {
         mySelect(e){
+          var self = this;
           if (itemActive != null) {
             itemActive.removeClass("list-item-selected");
-            itemActive.attr("id");
-            removeHandling(itemActive.attr("id"));
+            self.removeHandling(itemActive.attr("id"));
           }
           itemActive = $(e.target);
           itemActive.addClass("list-item-selected");
@@ -162,7 +162,7 @@ export default {
           var id = $(e.target).attr("id");
           //console.log("id: "+id);
           var address = itemActive[0].childNodes[2].childNodes[2].innerText;
-          var self = this;
+          
           self.$router.push('/' + id);
 
           var dinhviUser = localStorage.auth_dinhvivien;
