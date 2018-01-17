@@ -83,11 +83,18 @@ export default {
       customerPhone: null,
       customerAddress: null,
       driverUser: null,
+      geocoder: null,
+      key: null,
+      myposition: null,
+      directionsService: null,
+      directionsDisplay: null,
+      customerLocation: null,
     }
   },
 
   mounted() {
     var self = this;
+    self.key = 'AIzaSyArPtL7gTh6ZIN0LNS4fiC7j_HjKkK3-kA';
     const element = document.getElementById(this.mapName);
     const options = {
       zoom: 14,
@@ -106,6 +113,10 @@ export default {
     } else { 
         
     }
+
+    self.directionsService = new google.maps.DirectionsService();
+    self.directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true});
+    self.directionsDisplay.setMap(self.map);
 
     self.ListenOnDriver();
   },
@@ -136,11 +147,11 @@ export default {
       self.driverUser = userDiver;
 
       if(userDiver){
-        var driverRef = firebase.database().ref('drivers/' + userDiver);
-        driverRef.on('value', function(driver){
-          console.log('listen on driver ' + driver.key);
-          if(driver.child('mycustomer').numChildren() > 0){
-            self.ShowInforCustomer(driver.child('mycustomer').child('address').val(), driver.child('mycustomer').child('name').val(), driver.child('mycustomer').child('phone').val());
+        var mycustomerRef = firebase.database().ref('drivers/' + self.driverUser +'/mycustomer');
+        mycustomerRef.on('value', function(mycustomer){
+          console.log('listen on mycustomer ' + mycustomer.key);
+          if(mycustomer.numChildren() > 0){
+            self.ShowInforCustomer(mycustomer.child('name').val(), mycustomer.child('phone').val(), mycustomer.child('address').val());
           }
         });
       }else{
@@ -161,11 +172,32 @@ export default {
     AppceptCustomer(){
       var self = this;
       ///confirmcustomer/:customer/:driver'
+      self.showCounter = false;
       if(self.customerPhone && self.driverUser){
         var url = `https://barg-server.herokuapp.com/taixe/confirmcustomer/${self.customerPhone}/${self.driverUser}`;
         axios.get(url)
         .then(function(response){
-          // hiển thị customer
+          // hiển thị vị trí của customer
+          self.geocoder.geocode({'address': self.customerAddress}, function(results, status) {
+            if (status == 'OK') {
+              var location = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
+              var marker = new google.maps.Marker({
+                map: self.map,
+                draggable: false,
+                position: location
+              });
+
+              self.customerLocation = location;
+              self.bounds.extend(location);
+              self.markers.push(marker);
+              self.map.fitBounds(self.bounds);
+
+              // show đường đi ngắn nhất
+              self.showPath();
+            } else {
+              console.log('Geocode was not successful for the following reason: ' + status);
+            }
+          });
         })
         .catch(function(error){
 
@@ -180,6 +212,7 @@ export default {
     showPosition(position){
       var self = this;
       var location = new google.maps.LatLng(position.latitude,position.longitude);
+      self.myposition = location;
       var marker = new google.maps.Marker({
         map: self.map,
         draggable: true,
@@ -189,8 +222,59 @@ export default {
       self.bounds.extend(location);
       self.markers.push(marker);
       self.map.setCenter(location);
-      //console.log('location ' + position);
+      marker.addListener('drag', function(){
+        self.updateLocation(marker.getPosition().lat(), marker.getPosition().lng());
+        // tính path lại
+        self.myposition = marker.getPosition();
+      });
 
+      marker.addListener('dragend', function(){
+        self.showPath();
+      });
+      //console.log('location ' + position);
+      self.updateLocation(location.lat(), location.lng());
+    },
+    GeocodeInGoogle(address){
+      var self = this;
+      console.log(address);
+
+      self.geocoder.geocode({'address': address}, function(results, status) {
+        if (status == 'OK') {
+
+          self.lat = results[0].geometry.location.lat();
+          self.lng = results[0].geometry.location.lng();
+          console.log('latlng ' + self.lat + ' ' + self.lng);
+
+        } else {
+          console.log('Geocode was not successful for the following reason: ' + status);
+          self.lat = null;
+          self.lng = null;
+        }
+      });
+    },
+
+    showPath(){
+      var self = this;
+      console.log(origin);
+      var request = {
+        origin: self.myposition,
+        destination: self.customerLocation,
+        travelMode: 'DRIVING',
+      };
+      self.directionsService.route(request, function(result, status) {
+        if (status == 'OK') {
+          self.directionsDisplay.setDirections(result);
+        }
+      });
+    },
+
+    updateLocation(lat, lng){
+      var self = this;
+      var locationRef = firebase.database().ref('drivers/' + self.driverUser+'/locations');
+      locationRef.update({
+        lat: lat,
+        lng: lng
+      });
     }
 
   },

@@ -28,6 +28,7 @@ export default {
       lng: null,
       driversRef:[],
       driverMarker:[],
+      geocoder: null
     }
 
   },
