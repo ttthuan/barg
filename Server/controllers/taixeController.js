@@ -47,6 +47,11 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
                     driver.update({
                         statusfordriver: 2
                     });
+                    //Update trang thai request cua khach hang 
+                    var requestref = ref.child(_customer).child("request");
+                    requestref.update({
+                        statusforreq: 4
+                    });
                     //Update cho tai xe
                     var driverref = firebase.app().database().ref("drivers");
                     driverref.once("value")
