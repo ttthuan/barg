@@ -99,11 +99,19 @@ export default {
 
     self.bounds = new google.maps.LatLngBounds();
 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(position => {
+          self.showPosition(position.coords);
+        });
+    } else { 
+        
+    }
+
     self.ListenOnDriver();
   },
 
   methods: {
-    loadCounter(e){
+    loadCounter(){
       var time = 5;
       var initialOffset = '440';
       var i = 0;
@@ -113,6 +121,7 @@ export default {
           if (i == time) {    
             clearInterval(interval);
             $('.circle_animation').css('stroke-dashoffset', 0);
+            // call reject
             return;
           }
           $('.circle_animation').css('stroke-dashoffset', ((i+1)*(initialOffset/time)));
@@ -146,23 +155,41 @@ export default {
       self.customerName = name;
       self.customerPhone = phone;
       self.customerAddress = address;
+      self.loadCounter();
     },
 
     AppceptCustomer(){
       var self = this;
       ///confirmcustomer/:customer/:driver'
-      if(self.customerPhone && )
-      var url = `https://barg-server.herokuapp.com/taixe/confirmcustomer/${self.customerPhone}/${self.driverUser}`;
-      axios.get(url)
-      .then(function(response){
-        
-      })
-      .catch(function(error){
+      if(self.customerPhone && self.driverUser){
+        var url = `https://barg-server.herokuapp.com/taixe/confirmcustomer/${self.customerPhone}/${self.driverUser}`;
+        axios.get(url)
+        .then(function(response){
+          // hiển thị customer
+        })
+        .catch(function(error){
 
-      });
+        });
+      }
     },
 
     RejectCustomer(){
+
+    },
+
+    showPosition(position){
+      var self = this;
+      var location = new google.maps.LatLng(position.latitude,position.longitude);
+      var marker = new google.maps.Marker({
+        map: self.map,
+        draggable: true,
+        position: location
+      });
+
+      self.bounds.extend(location);
+      self.markers.push(marker);
+      self.map.setCenter(location);
+      //console.log('location ' + position);
 
     }
 
