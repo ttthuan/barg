@@ -6,7 +6,6 @@ var firebase = require('../configs/FirebaseConfig');
 
 
 // chon tai xe cho khach
-
 router.get('/choosedriver/:customer/:driver', function (req, res) {
     var _customer = req.params.customer;
     var _driver = req.params.driver;

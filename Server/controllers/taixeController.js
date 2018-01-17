@@ -8,29 +8,29 @@ var firebase = require('../configs/FirebaseConfig');
 router.get('/login/:username/:password', function (req, res) {
     var _username = req.params.username;
     var _password = req.params.password;
-    
+
     var ref = firebase.app().database().ref("drivers");
     ref.once("value")
-    .then(function (snap) {
-        var sucess = false;
-        snap.forEach((driver) => {
-            if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
-                var status = ref.child(driver.key);
-                status.update({
-                    statusfordriver : 3
-                });
-                sucess = true;
-                res.statusCode = 200;
-                res.json("Đăng nhập thành công");
+        .then(function (snap) {
+            var sucess = false;
+            snap.forEach((driver) => {
+                if (driver.child('username').val() == _username && driver.child('password').val() == _password) {
+                    var status = ref.child(driver.key);
+                    status.update({
+                        statusfordriver: 3
+                    });
+                    sucess = true;
+                    res.statusCode = 200;
+                    res.json("Đăng nhập thành công");
+                    return;
+                }
+            });
+            if (sucess == false) {
+                res.statusCode = 504;
+                res.json("Đăng nhập thất bại");
                 return;
             }
         });
-        if(sucess == false){
-            res.statusCode = 504;
-            res.json("Đăng nhập thất bại");
-            return;
-        }
-    });
 });
 
 // api tai xe xac nhan  (app tai xe gui cho server)
@@ -77,7 +77,7 @@ router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
     var refDrivers = firebase.app().database().ref("drivers");
     var driverRef = refDrivers.child(_driver);
     driverRef.update({
-        mycustomer:"null"
+        mycustomer: "null"
     });
     //Tự động chọn tài xế mới cho khách hàng
     var ref = firebase.app().database().ref("customers");
@@ -102,6 +102,14 @@ router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
                             return _drivers;
                         })
                         .then((r) => {
+                            if (_drivers.length == 0) {
+                                var customerref = firebase.app().database().ref("customers").
+                                    child(_customer).child("request");
+                                customerref.update({
+                                    statusforreq: 3
+                                })
+                                return;
+                            }
                             console.log(_drivers[0]);
                             var driversecond = _drivers[0];
                             // lấy ra thông tin khách hàng
