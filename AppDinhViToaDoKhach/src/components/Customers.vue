@@ -4,7 +4,7 @@
       <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH REQUEST</h4>
     </div>
     <div id="list-area-content">
-      <div class="list-item noselect" v-for="request in listRequest" @click.prevent ="mySelect" @mouseover="myHover" 
+      <div class="list-item noselect" title="Tài xế: Trịnh Thanh Thuận - driver1" v-for="request in listRequest" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
