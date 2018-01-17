@@ -54,4 +54,50 @@ router.get('/choosedriver/:customer/:driver', function (req, res) {
     res.json("sucess");
 });
 
+// api xác nhận điểm đã được định vị
+router.post('/located', function(req, res){
+    var address = req.body.address;
+    var lat = req.body.lat;
+    var lng = req.body.lng;
+
+    var pointsRef = firebase.database().ref('points');
+    var isHasValue = false;
+
+    pointsRef.once('value', function(points){
+        points.forEach(function(point) {
+            if(point.val().address == address){
+                isHasValue = true;
+                return;
+            }
+        });
+
+        if(isHasValue == true){
+            // var location = {
+            //     lat: lat,
+            //     lng: lng
+            // };
+
+            // var update = {};
+            // update['/locations'] = location;
+
+            // pointsRef.child(address).update(update);
+        }else{
+            var location = {
+                lat: lat,
+                lng: lng
+            };
+
+            var update = {};
+            update['/'+address + '/locations'] = location;
+
+            pointsRef.update(update);
+        }
+    });
+    res.json('success');
+});
+
+router.get('/', function(req, res){
+    res.json("test api driver");
+});
+
 module.exports = router;
