@@ -275,6 +275,25 @@ router.get('/stop/:customer/:driver', function (req, res) {
                     driver.update({
                         statusforreq: 6 // đã hoàn thành
                     });
+                      // update request cho histories
+
+                      var refHistories = ref.child(_customer).child("histories");
+                      // tạo 1 key mới cho history sau đó updaet cai key đó
+                      var newPostKey = ref.child("histories").push().key;
+                      
+                      var historyRef = refHistories.child(newPostKey);
+                      historyRef.push(newPostKey);
+
+                      var update = {};
+                      var newMycustomer = {
+                          phone: customer.key,
+                          address: customer.child('request').val().addressold,
+                          name: customer.val().name
+                      };
+
+                      update[newPostKey] = newMycustomer                     
+                      refHistories.update(update);
+
                     // update trạng thái tài xế
                     var driverref = firebase.app().database().ref("drivers").child(_driver);
                     driverref.update({
