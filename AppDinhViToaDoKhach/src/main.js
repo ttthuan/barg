@@ -10,7 +10,6 @@ import App from './App';
 // router components
 import Index from './components/Index.vue';
 import Login from './components/Login.vue';
-import MapDinhVi from './components/MapDinhVi.vue';
 
 Vue.use(VueRouter);
 
@@ -26,15 +25,40 @@ var config = {
 firebase.initializeApp(config);
 
 const routes = [
-  { path: '/', component: Index },
+  { 
+    path: '/', 
+    component: Index,
+    meta:{
+      requireAuth: true
+    }
+  },
   { path: '/login', component: Login },
-  { path: '/:phone', component: Index },
+  { 
+    path: '/:phone', 
+    component: Index,
+    meta:{
+      requireAuth: true
+    }
+  },
 ];
 
 const router = new VueRouter({routes});
 
-
 Vue.config.productionTip = false;
+
+router.beforeEach((to, from, next)=>{
+  var r = to.matched.some(record => record.meta.requireAuth);
+  console.log("requireAuth " + r);
+  if(r === true){
+    var user = localStorage.auth_dinhvivien;
+    console.log("localStorage " + user);
+    if(!user){
+      console.log("login");
+      next('/login');
+    }
+  }
+  next();
+});
 
 /* eslint-disable no-new */
 new Vue({

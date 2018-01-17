@@ -44,7 +44,7 @@ Vue.config.productionTip = false;
 router.beforeEach((to, from, next)=>{
   var r = to.matched.some(record => record.meta.requireAuth);
   console.log("requireAuth " + r);
-  if(r == true){
+  if(r === true){
     var user = localStorage.auth_driver;
     console.log("localStorage " + user);
     if(!user){

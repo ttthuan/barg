@@ -4,7 +4,7 @@
       <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH REQUEST</h4>
     </div>
     <div id="list-area-content">
-      <div class="list-item noselect" v-for="request in listRequest" @click.prevent ="mySelect" @mouseover="myHover" 
+      <div class="list-item noselect" v-for="request in listRequest" v-if="request.status == 1 && request.handling == dinhviUser" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
@@ -30,6 +30,57 @@
         </div>
       </div>
 
+      <div class="list-item noselect noclick" v-else-if="request.status == 1 && request.handling != dinhviUser" @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="list-item noselect list-item-located" v-else @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
   </div>
@@ -51,11 +102,12 @@ export default {
       linkPhone: "../../src/assets/image/phone.png",
       listRequest: [],
       geocoder: null,
-
+      dinhviUser: null,
     }
   },
   mounted(){
     var self = this;
+    self.dinhviUser = localStorage.auth_dinhvivien;
     var database = firebase.database().ref('customers');
 
     database.on('value', function(customers){
@@ -68,11 +120,16 @@ export default {
                 name: customer.val().name,
                 address: request.val().address,
                 phone: customer.key,
-                key: request.key
+                key: request.key,
+                status: request.val().statusforreq,
+                handling: request.val().handling,
               };
               //console.log(request.val());
               //console.log(customRequest);
-              self.listRequest.push(customRequest);
+              if(request.numChildren()>0){
+                self.listRequest.push(customRequest);
+              }
+              
             
           }
           
@@ -102,8 +159,13 @@ export default {
           //console.log("id: "+id);
           var address = itemActive[0].childNodes[2].childNodes[2].innerText;
           var self = this;
-          self.$router.push('/' + id);
 
+          var dinhviUser = localStorage.auth_dinhvivien;
+
+          if(dinhviUser){
+            self.preventClick(id, dinhviUser);
+            self.$router.push('/' + id);
+          }
         },
 
         myHover(e){
@@ -128,6 +190,14 @@ export default {
             }
           }
           return isHasValued;
+        },
+
+        preventClick(phone, user){
+          var self = this;
+          var requestRef = firebase.database().ref('customers/'+phone+'/request');
+          requestRef.update({
+            handling: user
+          })
         }
     }
 }

@@ -6,10 +6,9 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-md-6 col-sm-6">
-          <form>
           <div class="form-group">
-            <label for="user_name">Email</label>
-            <input type="text" class="form-control" id="user_name" placeholder="Email" v-model="txtUsername">
+            <label for="user_name">Username</label>
+            <input type="text" class="form-control" id="user_name" placeholder="Username" v-model="txtUsername">
           </div>
           <div class="form-group">
             <label for="pass_word">Password</label>
@@ -17,13 +16,12 @@
           </div>
           
         
-          <button class="btn btn-primary btn-block" @click="chat">
+          <button class="btn btn-primary btn-block" @click="dangNhap">
             <span class="glyphicon glyphicon-user">
-              
             </span>
             Đăng nhập
           </button>
-        </form>
+          <div class="alert alert-danger" role="alert" v-if="showWrong">Sai username hoặc password</div>
         </div>
       </div>
     </div>
@@ -33,13 +31,15 @@
 <script>
 
 import firebase from 'firebase';
+import axios from 'axios';
 
 export default {
   name: 'Login',
   data () {
     return {
-      txtUsername: "",
-      txtPassword: "",
+      txtUsername: null,
+      txtPassword: null,
+      showWrong: false,
     }
   },
   methods:{
@@ -47,30 +47,25 @@ export default {
       var self = this;
       console.log(self.txtUsername);
       console.log(self.txtPassword);
-      if(self.txtUsername === 'ttthuan' && self.txtPassword === '123'){
-        localStorage.auth_user = self.txtUsername;
-        self.txtUsername = "";
-        self.txtPassword = "";
-        self.$router.push("/profile");
-      }else{
-        alert('ffff');
+      if(self.txtUsername && self.txtPassword){
+        // /login/:username/:password
+        var url = `https://barg-server.herokuapp.com/dinhvi/login/${self.txtUsername}/${self.txtPassword}`;
+        axios.get(url)
+        .then(function(response){
+          localStorage.auth_dinhvivien = self.txtUsername;
+          self.$router.push('/');
+        })
+        .catch(function(error){
+          self.showWrong = true;
+        });
+
       }
     },
-    chat(){
+
+    clearWrongPassword(){
       var self = this;
-      console.log(firebase);
-      var database = firebase.database();
-
-      var entryContent = {
-        email: self.txtUsername,
-        text: self.txtPassword
-      };
-
-      var newPostKey = database.ref().child('contents').push().key;
-      var myDataRef = {};
-      myDataRef['/contents/' + newPostKey] = entryContent;
-      database.ref().update(myDataRef);
-    }
+      self.showWrong = false;
+    },
   }
 }
 </script>

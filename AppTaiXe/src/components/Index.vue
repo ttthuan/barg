@@ -16,7 +16,7 @@
         </div>
 
         <div id="name">
-          Trịnh Thanh Thuận
+          {{customerName}}
         </div>
       </div>
 
@@ -26,7 +26,7 @@
           <div class="hamburger-menu-item-icon">
             <img src="../../src/assets/image/clock-start.png" style="width: 18px; height: 18px;">
           </div>
-          <div class="hamburger-menu-item-context">
+          <div class="hamburger-menu-item-context" v-on:click="startTranferCustomer">
             Bắt đầu
           </div>
         </div>
@@ -34,7 +34,7 @@
           <div class="hamburger-menu-item-icon">
             <img src="../../src/assets/image/clock-end.png" style="width: 18px; height: 18px;">
           </div>
-          <div class="hamburger-menu-item-context">
+          <div class="hamburger-menu-item-context" v-on:click="stopTranferCustomer">
             Kết thúc
           </div>
         </div>
@@ -298,17 +298,21 @@ export default {
 
     showPath(){
       var self = this;
-      console.log(origin);
-      var request = {
-        origin: self.myposition,
-        destination: self.customerLocation,
-        travelMode: 'DRIVING',
-      };
-      self.directionsService.route(request, function(result, status) {
-        if (status == 'OK') {
-          self.directionsDisplay.setDirections(result);
-        }
-      });
+      //console.log(origin);
+      var origin = self.myposition;
+      var destion = self.customerLocation;
+      if(origin && destion){
+        var request = {
+          origin: origin,
+          destination: destion,
+          travelMode: 'DRIVING',
+        };
+        self.directionsService.route(request, function(result, status) {
+          if (status == 'OK') {
+            self.directionsDisplay.setDirections(result);
+          }
+        });
+      }
     },
 
     updateLocation(lat, lng){
@@ -323,6 +327,39 @@ export default {
     fiveSecon(){
       var self = this;
       //console.log('second');
+      if(self.markers[0]){
+        self.updateLocation(self.markers[0].getPosition().lat(), self.markers[0].getPosition().lng());
+      }
+    },
+
+    startTranferCustomer(){
+      // /start/:customer/
+      var self = this;
+      if(self.customerPhone){
+        var url = `https://barg-server.herokuapp.com/taixe/start/${self.customerPhone}`;
+        axios.get(url)
+        .then(function(response){
+
+        })
+        .catch(function(error){
+          console.log('Loi call api start tranfer customer ' + error);
+        });
+      }
+    },
+
+    stopTranferCustomer(){
+      var self = this;
+      // /stop/:customer/:driver
+      if(self.customerPhone && self.driverUser){
+        var url = `https://barg-server.herokuapp.com/taixe/stop/${self.customerPhone}/${self.driverUser}`;
+        axios.get(url)
+        .then(function(response){
+
+        })
+        .catch(function(error){
+          console.log('Loi call api stop tranfer customer ' + error);
+        });
+      }
     }
 
   },

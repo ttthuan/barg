@@ -2,18 +2,19 @@ var express = require('express');
 
 // init firebae
 var firebase = require('../configs/FirebaseConfig');
-
+var DriectionAPI = require('../configs/GoogleMap');
+var util = require('util');
 
 var router = express.Router();
 
 
-router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq', function (req, res) {
-    var phone = req.params.phone;
-    var name1 = req.params.name;
-    var addressold1 = req.params.addressold;
-    var typeofcar1 = req.params.typeofcar;
-    var timereq1 = req.params.timereq;
-    var statusforreq1 = req.params.statusforreq;
+router.post('/customers', function (req, res) {
+    var phone = req.body.phone;
+    var name1 = req.body.name;
+    var addressold1 = req.body.addressold;
+    var typeofcar1 = req.body.typeofcar;
+    var timereq1 = req.body.timereq;
+    var statusforreq1 = req.body.statusforreq;
     console.log("debug " + name1);
 
     var isLocated = false;
@@ -25,13 +26,11 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                 isLocated = true;
                 lat = point.child('locations').val().lat;
                 lng = point.child('locations').val().lng;
+                
+                statusforreq1 = 2;
                 return;
             }
         });
-
-        if(isLocated == true){
-            statusforreq1 = 2; // đã được định vị
-        }
 
         var ref = firebase.app().database().ref("customers");
         ref.once("value")
@@ -71,10 +70,9 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                         }
                     });
                 }
-            });
 
 
-            /////////////////////////
+                /////////////////////////
             if(isLocated == true){
                 var driverDatas = [];
                 var N = null;
@@ -91,7 +89,7 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                 var driverRef = firebase.database().ref('drivers');
                 driverRef.once('value', function(drivers){
                     //res.json(drivers);
-                    driverDatas = drivers;
+                    //driverDatas = drivers;
 
                     drivers.forEach(function(driver){
                         if(driver.val().statusfordriver == 3){
@@ -103,7 +101,7 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                         lat: lat,
                         lng: lng
                     }
-
+                    console.log('debug latlng  ----- ' + origin);
                     drivers.forEach(function(driver){
                         // check trang thai cho driver
                         if(driver.val().statusfordriver == 3){ // trang thai dang san sang
@@ -148,6 +146,53 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                                         // listDriver.forEach(function(item){
                                         //     console.log('sort item ' + item.distance);
                                         // });
+
+                                        /////
+                                        var _customer = phone;
+    var _driver = listDriver[0].key;
+
+    var ref = firebase.app().database().ref("drivers");
+    ref.once("value")
+        .then(function (snap) {
+            var datontai = false;
+            snap.forEach((driver) => {
+                if (driver.key == _driver) {
+                    datontai = true;
+                    return;
+                }
+            });
+            if (datontai == false) {
+                res.statusCode = 504;
+            }
+            if (datontai == true) {
+                // lấy ra thông tin khách hàng
+                var refCustomers = firebase.app().database().ref("customers");
+                var _mycustomer;
+                refCustomers.once("value")
+                    .then(function (snap) {
+                        snap.forEach((customer) => {
+                            if (customer.key == _customer) {
+                                // update khách hàng cho tài xế.
+                                var driverRef = ref.child(_driver);
+                                var update = {};
+                                var newMycustomer ={
+                                    phone: customer.key,
+                                    address:  customer.child('request').val().addressold,
+                                    name: customer.val().name
+                                };
+
+                                update['\mycustomer'] = newMycustomer
+                                driverRef.update(update);
+                                return;
+                            }
+                        })
+                    })
+                    .catch((e) => {
+                        console.log(e);
+                    });
+            }
+        });
+                                        //////
                                     }
                                 }
                             })
@@ -158,6 +203,11 @@ router.get('/customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforre
                     });
                 });
             }
+
+            });
+
+
+            
 
         });
 

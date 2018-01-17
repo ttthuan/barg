@@ -28,7 +28,8 @@ export default {
       lng: null,
       driversRef:[],
       driverMarker:[],
-      geocoder: null
+      geocoder: null,
+      dinhviUser: null,
     }
 
   },
@@ -36,28 +37,33 @@ export default {
   mounted() {
 
     var self = this;
-    const element = document.getElementById(this.mapName);
-    const options = {
-      zoom: 14,
-      disableDefaultUI: true,
-      center: new google.maps.LatLng(51.501527,-0.1921837)
-    };
-    
-    self.map = new google.maps.Map(element, options);
-    self.geocoder = new google.maps.Geocoder;
 
-    if(self.$route.params.phone){
-      //console.log('phone param '+self.$route.params.phone);
-      self.GeocodeInGoogle(self.GetValue(self.$route.params.phone, 'address'));
-    }
+    self.dinhviUser = localStorage.auth_dinhvivien;
 
-    if(self.phoneRef){
-      self.phoneRef.off();
-      self.phoneRef = null;
+    if(self.dinhviUser){
+      const element = document.getElementById(this.mapName);
+      const options = {
+        zoom: 14,
+        disableDefaultUI: true,
+        center: new google.maps.LatLng(51.501527,-0.1921837)
+      };
+      
+      self.map = new google.maps.Map(element, options);
+      self.geocoder = new google.maps.Geocoder;
+
+      if(self.$route.params.phone){
+        //console.log('phone param '+self.$route.params.phone);
+        self.GeocodeInGoogle(self.GetValue(self.$route.params.phone, 'address'));
+      }
+
+      if(self.phoneRef){
+        self.phoneRef.off();
+        self.phoneRef = null;
+      }
+      self.Detachlisteners();
+      self.DeleteAllDriverMarker();
+      self.bounds = new google.maps.LatLngBounds();
     }
-    self.Detachlisteners();
-    self.DeleteAllDriverMarker();
-    self.bounds = new google.maps.LatLngBounds();
   },
 
   methods: {
@@ -146,7 +152,9 @@ export default {
       var self = this;
       console.log("Near lest " + self.$route.params.phone);
       var phone = self.$route.params.phone;
-      var numberDriver = 1;
+
+      if(phone){
+        var numberDriver = 1;
 
       if(self.phoneRef){
         self.phoneRef.off();
@@ -225,6 +233,7 @@ export default {
       });
 
       self.CallApiLocated();
+      }
     },
 
     CallApiLocated(){
@@ -326,9 +335,13 @@ export default {
     '$route'(to, from){
       //console.log(to.params.address);
       //console.log(to.params.phone);
-      this.GeocodeInGoogle(this.GetValue(to.params.phone, 'address'));
-      this.Detachlisteners();
-      this.DeleteAllDriverMarker();
+      this.dinhviUser = localStorage.auth_dinhvivien;
+
+      if(this.dinhviUser){
+        this.GeocodeInGoogle(this.GetValue(to.params.phone, 'address'));
+        this.Detachlisteners();
+        this.DeleteAllDriverMarker();
+      }
     }
 
   }
