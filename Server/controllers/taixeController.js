@@ -261,4 +261,30 @@ router.get('/start/:customer/', function (req, res) {
     res.json("sucess");
 });
 
+
+//Api Kết thúc chở khách
+router.get('/stop/:customer/:driver', function (req, res) {
+    var _customer = req.params.customer;
+    var _driver = req.params.driver;
+    var ref = firebase.app().database().ref("customers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((customer) => {
+                if (customer.key == _customer) {
+                    var driver = ref.child(_customer).child("request");
+                    driver.update({
+                        statusforreq: 6 // đã hoàn thành
+                    });
+                    // update trạng thái tài xế
+                    var driverref = firebase.app().database().ref("drivers").child(_driver);
+                    driverref.update({
+                        statusfordriver: 3 // đang sẵn sàng
+                    });
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
+});
+
 module.exports = router;
