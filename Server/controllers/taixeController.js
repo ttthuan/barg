@@ -241,5 +241,24 @@ router.post('/finddrivernearest', function (req, res) {
 
     res.json('success');
 });
+//API Bat Dau Cho Khach
+router.get('/start/:customer/', function (req, res) {
+    var _customer = req.params.customer;
+
+    var ref = firebase.app().database().ref("customers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((customer) => {
+                if (customer.key == _customer) {
+                    var driver = ref.child(_customer).child("request");
+                    driver.update({
+                        statusforreq: 5
+                    });
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
+});
 
 module.exports = router;
