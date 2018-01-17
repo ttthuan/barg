@@ -91,15 +91,27 @@
   }
 
   #hamburger-menu-items{
+    margin-top: 10px;
     height: 100%;
     min-height: 100%;
   }
 
   .hamburger-menu-item{
-    height: 40px;
+    /*height: 40px;*/
+    margin: 5px 0px 5px 0px;
     width: 100%;
     /*background-color: rgba(153, 153, 218, 0.5);*/
     display: table;
+    transition: 0.2s ease-out;
+  }
+
+  .hamburger-menu-item:hover{
+    background-color: rgba(0,0,0,0.2);
+  }
+
+  .hamburger-menu-item-disable{
+    opacity: 0.4;
+    pointer-events: none;
   }
 
   .hamburger-menu-item-icon{
@@ -166,7 +178,14 @@
     left: calc(50% - 30px);
   }
 
-
+  #name{
+    margin-top: 105px;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+  }
 
   #countdown{
     position: fixed;
