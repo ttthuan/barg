@@ -65,11 +65,11 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
                                     status.update({
                                         statusfordriver: 4
                                     });
-                                    return;
+                                    res.json("out");
                                 }
                             });
                         });
-                    return;
+                    res.json("out");
                 }
             });
         });
