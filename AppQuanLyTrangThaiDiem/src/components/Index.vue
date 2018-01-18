@@ -131,6 +131,7 @@ export default {
       var marker = new google.maps.Marker({
         map: self.map,
         draggable: true,
+        icon: '../../src/assets/image/marker-accepted.png',
         position: location
       });
 

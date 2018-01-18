@@ -9,7 +9,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -35,7 +35,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -62,7 +62,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -89,7 +89,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -116,7 +116,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -143,7 +143,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -170,7 +170,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">
@@ -197,7 +197,7 @@
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
-            <div class="avatar-text">t</div>
+            <div class="avatar-text">{{request.name[0]}}</div>
           </div>
         </div>
         <div class="item-content noclick">

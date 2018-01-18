@@ -136,6 +136,7 @@ export default {
       var marker = new google.maps.Marker({
         map: self.map,
         draggable: true,
+        icon: '../../src/assets/image/marker-unlocate.png',
         position: location
       });
 
@@ -183,7 +184,7 @@ export default {
                     map: self.map,
                     position: new google.maps.LatLng(driverItem.val().locations.lat,driverItem.val().locations.lng),
                     title: driverItem.key,
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/green.png',
+                    icon: '../../src/assets/image/bike-waiting.png',
                     tag: driverItem,
                     label: (numberDriver)+'',
                   });
@@ -206,9 +207,11 @@ export default {
                     //console.log(driverItem.locations.lat + " location " + driverItem.locations.lng);
                     marker.setPosition(new google.maps.LatLng(driverItem.val().locations.lat,driverItem.val().locations.lng));
                     if(driverItem.val().statusfordriver == 2){ // chấp nhận lái
-                      marker.setIcon('http://maps.google.com/mapfiles/ms/micons/blue.png');
+                      marker.setIcon('../../src/assets/image/bike-accepted.png');
+                    }else if(driverItem.val().statusfordriver == 1){ // đang sẵn sàng
+                      marker.setIcon('../../src/assets/image/bike-ignore.png');
                     }else if(driverItem.val().statusfordriver == 3){ // đang sẵn sàng
-                      marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green.png');
+                      marker.setIcon('../../src/assets/image/bike-waiting.png');
                     }
                   }
                 }
