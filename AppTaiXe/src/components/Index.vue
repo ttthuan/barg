@@ -154,7 +154,7 @@ export default {
       var initialOffset = '440';
       var i = 0;
 
-      var interval = setInterval(function() {
+      var interval = setTimeout(function() {
           $('#countdown-text').text((5-i));
           if (i == time) {    
             clearInterval(interval);

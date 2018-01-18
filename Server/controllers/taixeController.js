@@ -41,37 +41,35 @@ router.get('/confirmcustomer/:customer/:driver', function (req, res) {
     var _customer = req.params.customer;
     var _driver = req.params.driver;
 
-    var ref = firebase.app().database().ref("customers");
+    var ref = firebase.app().database().ref("customers").child(_customer);
     ref.once("value")
         .then(function (snap) {
-            snap.forEach((customer) => {
-                if (customer.key == _customer) {
-                    var driver = ref.child(_customer).child("request").child("drivers").child(_driver);
-                    driver.update({
-                        statusfordriver: 2
-                    });
-                    //Update trang thai request cua khach hang 
-                    var requestref = ref.child(_customer).child("request");
-                    requestref.update({
-                        statusforreq: 4
-                    });
-                    //Update cho tai xe
-                    var driverref = firebase.app().database().ref("drivers");
-                    driverref.once("value")
-                        .then(function (snap) {
-                            snap.forEach((driver) => {
-                                if (driver.key == _driver) {
-                                    var status = driverref.child(_driver);
-                                    status.update({
-                                        statusfordriver: 4
-                                    });
-                                    res.json("out");
-                                }
-                            });
-                        });
-                    res.json("out");
-                }
+            var driver = ref.child("request").child("drivers").child(_driver);
+            driver.update({
+                statusfordriver: 2
             });
+            //Update trang thai request cua khach hang 
+            var requestref = ref.child("request");
+            requestref.update({
+                statusforreq: 4
+            });
+            //Update cho tai xe
+            var driverref = firebase.app().database().ref("drivers");
+            driverref.once("value")
+                .then(function (snap) {
+                    snap.forEach((driver) => {
+                        if (driver.key == _driver) {
+                            var status = driverref.child(_driver);
+                            status.update({
+                                statusfordriver: 4
+                            });
+                            res.json("out");
+                            return;
+                        }
+                    });
+                });
+            res.json("out");
+            return;
         });
     res.json("sucess");
 });
@@ -89,6 +87,7 @@ router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
     });
     //Tự động chọn tài xế mới cho khách hàng
     var ref = firebase.app().database().ref("customers");
+    var isSend = true;
     ref.once("value")
         .then(function (snap) {
             snap.forEach((customer) => {
@@ -105,6 +104,7 @@ router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
                                 if (drivers.key != _driver && drivers.val().statusfordriver == 6) {
                                     _drivers.push(drivers.key);
                                     //console.log(drivers.key);
+                                    return _drivers;
                                 }
                             });
                             return _drivers;
@@ -146,6 +146,7 @@ router.get('/unconfirmcustomer/:customer/:driver', function (req, res) {
                     return;
                 }
             });
+            
         });
     res.json("sucess");
 });

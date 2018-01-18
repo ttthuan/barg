@@ -41,6 +41,7 @@ router.get('/choosedriver/:customer/:driver', function (req, res) {
 
                                 update['\mycustomer'] = newMycustomer
                                 driverRef.update(update);
+                                res.json('fff');
                                 return;
                             }
                         })
