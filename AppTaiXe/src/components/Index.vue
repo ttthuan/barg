@@ -365,6 +365,7 @@ export default {
     logout(){
       // /logout/:driver/
       var self = this;
+      console.log("logout");
       if(self.driverUser){
         var url = `https://barg-server.herokuapp.com/taixe/logout/${self.driverUser}`;
         axios.get(url)
