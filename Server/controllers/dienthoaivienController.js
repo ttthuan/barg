@@ -54,6 +54,7 @@ router.post('/customers', function (req, res) {
                                 statusforreq: statusforreq1,
                                 timereq: timereq1,
                                 typeofcar: typeofcar1,
+                                handling: "null",
                             },
 
                         })
@@ -67,6 +68,7 @@ router.post('/customers', function (req, res) {
                             statusforreq: statusforreq1,
                             timereq: timereq1,
                             typeofcar: typeofcar1,
+                            handling: "null",
                         }
                     });
                 }
