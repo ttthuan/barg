@@ -119,21 +119,34 @@ router.post('/customers', function (req, res) {
                                         key: driver.key,
                                         distance: distance
                                     }
-
-                                    listDriver.push(item);
+                                    var i = 0;
+                                    for(i = 0; i < listDriver.length; i++){
+                                        if(item.distance < listDriver[i].distance){
+                                            break;
+                                        }
+                                    }
+                                    
+                                    listDriver.splice(i,0,item);
+                                    //listDriver.push(item);
 
                                     console.log(driver.key + ' ' + distance);
                                     console.log(listDriver.length + ' ' + lenDriver);
 
                                     if(listDriver.length == lenDriver){
-                                        listDriver.sort(function(a, b){
-                                            return parseFloat(a.distance) - parseFloat(b.distance);
-                                        })
+                                        // listDriver.sort(function(a, b){
+                                        //     return parseFloat(a.distance) - parseFloat(b.distance);
+                                        // })
                                         console.log("sort");
 
                                         var driversRef = firebase.database().ref('customers/'  + phone + '/request/drivers');
                                         var i = 0;
-                                        var Solan = listDriver.length > N ? N:listDriver.length;
+                                        
+                                        var Solan = listDriver.length;
+                            
+                                        if(listDriver.length > N){
+                                            Solan = N;
+                                        }
+
                                         var postData = {
                                             statusfordriver: 6
                                         };

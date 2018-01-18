@@ -45,7 +45,7 @@
           <div class="hamburger-menu-item-icon">
             <img src="../../src/assets/image/logout.png" style="width: 18px; height: 18px;">
           </div>
-          <div class="hamburger-menu-item-context">
+          <div class="hamburger-menu-item-context" v-on:click="logout">
             Đăng xuất
           </div>
         </div>
@@ -360,7 +360,23 @@ export default {
           console.log('Loi call api stop tranfer customer ' + error);
         });
       }
-    }
+    },
+
+    logout(){
+      // /logout/:driver/
+      var self = this;
+      if(self.driverUser){
+        var url = `https://barg-server.herokuapp.com/taixe/logout/${self.driverUser}`;
+        axios.get(url)
+        .then(function(response){
+          localStorage.removeItem('auth_driver');
+          self.$router.push('/login');
+        })
+        .catch(function(error){
+
+        });
+      }
+    },
 
   },
 

@@ -175,8 +175,8 @@ router.post('/finddrivernearest', function (req, res) {
 
     var driverRef = firebase.database().ref('drivers');
     driverRef.once('value', function(drivers){
-        //res.json(drivers);
-        driverDatas = drivers;
+    //res.json(drivers);
+    //driverDatas = drivers;
 
         drivers.forEach(function(driver){
             if(driver.val().statusfordriver == 3){
@@ -188,7 +188,7 @@ router.post('/finddrivernearest', function (req, res) {
             lat: lat,
             lng: lng
         }
-
+        console.log('debug latlng  ----- ' + origin);
         drivers.forEach(function(driver){
             // check trang thai cho driver
             if(driver.val().statusfordriver == 3){ // trang thai dang san sang
@@ -204,21 +204,61 @@ router.post('/finddrivernearest', function (req, res) {
                             key: driver.key,
                             distance: distance
                         }
-
-                        listDriver.push(item);
+                        var i = 0;
+                        for(i = 0; i < listDriver.length; i++){
+                            if(item.distance < listDriver[i].distance){
+                                break;
+                            }
+                        }
+                        
+                        listDriver.splice(i,0,item);
 
                         console.log(driver.key + ' ' + distance);
                         console.log(listDriver.length + ' ' + lenDriver);
 
                         if(listDriver.length == lenDriver){
-                            listDriver.sort(function(a, b){
-                                return parseFloat(a.distance) - parseFloat(b.distance);
-                            })
+                            // listDriver.sort(function(a, b){
+                            //     return parseFloat(a.distance) - parseFloat(b.distance);
+                            // })
+
+                            /// sort
+
+                            // var swapp;
+                            // var n = listDriver.length;
+                            // var x = listDriver;
+                            // do {
+                            //     swapp = false;
+                            //     for (var i=0; i < n-1; i++)
+                            //     {
+                            //         if (x[i].distance > x[i+1].distance)
+                            //         {
+                            //            var temp = x[i];
+                            //            x[i] = x[i+1];
+                            //            x[i+1] = temp;
+                            //            swapp = true;
+                            //         }
+                            //     }
+                            //     n--;
+                            // } while (swapp);
+
+
+                            ////
                             console.log("sort");
+                            var i = 0;
+
+                            var Solan = listDriver.length;
+                
+                            if(listDriver.length > N){
+                                Solan = N;
+                            }
+
+                            for(i = 0; i < Solan; i++){
+                                console.log(listDriver[i].distance);
+                            }
 
                             var driversRef = firebase.database().ref('customers/'  + phone + '/request/drivers');
-                            var i = 0;
-                            var Solan = listDriver.length > N ? N:listDriver.length;
+                            
+                            
                             var postData = {
                                 statusfordriver: 6
                             };
@@ -235,17 +275,12 @@ router.post('/finddrivernearest', function (req, res) {
                             // });
                         }
                     }
-                })
-                .catch(function(error){
-                    console.log("LOI LAY DISTANCE TREN GOOGLE " + error);
-                });
             }
-        });
-
-        
-    });
-
+        );
+    }
+});
     res.json('success');
+});
 });
 //API Bat Dau Cho Khach
 router.get('/start/:customer/', function (req, res) {
