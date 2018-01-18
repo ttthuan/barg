@@ -33,9 +33,9 @@ router.get('/choosedriver/:customer/:driver', function (req, res) {
                                 // update khách hàng cho tài xế.
                                 var driverRef = ref.child(_driver);
                                 var update = {};
-                                var newMycustomer ={
+                                var newMycustomer = {
                                     phone: customer.key,
-                                    address:  customer.child('request').val().addressold,
+                                    address: customer.child('request').val().addressold,
                                     name: customer.val().name
                                 };
 
@@ -54,7 +54,7 @@ router.get('/choosedriver/:customer/:driver', function (req, res) {
 });
 
 // api xác nhận điểm đã được định vị
-router.post('/located', function(req, res){
+router.post('/located', function (req, res) {
     var address = req.body.address;
     var lat = req.body.lat;
     var lng = req.body.lng;
@@ -62,15 +62,15 @@ router.post('/located', function(req, res){
     var pointsRef = firebase.database().ref('points');
     var isHasValue = false;
 
-    pointsRef.once('value', function(points){
-        points.forEach(function(point) {
-            if(point.val().address == address){
+    pointsRef.once('value', function (points) {
+        points.forEach(function (point) {
+            if (point.val().address == address) {
                 isHasValue = true;
                 return;
             }
         });
 
-        if(isHasValue == true){
+        if (isHasValue == true) {
             // var location = {
             //     lat: lat,
             //     lng: lng
@@ -80,14 +80,14 @@ router.post('/located', function(req, res){
             // update['/locations'] = location;
 
             // pointsRef.child(address).update(update);
-        }else{
+        } else {
             var location = {
                 lat: lat,
                 lng: lng
             };
 
             var update = {};
-            update['/'+address + '/locations'] = location;
+            update['/' + address + '/locations'] = location;
 
             pointsRef.update(update);
         }
@@ -95,7 +95,7 @@ router.post('/located', function(req, res){
     res.json('success');
 });
 
-router.get('/', function(req, res){
+router.get('/', function (req, res) {
     res.json("test api driver");
 });
 
@@ -123,5 +123,27 @@ router.get('/login/:username/:password', function (req, res) {
             }
         });
 });
+// api đăng xuất cho định vị viên
+// update lại các request mà định vị viên này đang dữ
+router.get('/logout/:dinhvivien/', function (req, res) {
+    var _dinhvivien = req.params.dinhvivien;
+    var ref = firebase.app().database().ref("customers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((customer) => {
+                {
+                    var refRequestOfCustomer = customer.child("request");
+                    if (refRequestOfCustomer.child("handling").val() == _dinhvivien) {
+                        var refHanding = ref.child(customer.key).child("request");                     
+                        refHanding.update({
+                            handling: "null"
+                        });
+                    }
 
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
+});
 module.exports = router;

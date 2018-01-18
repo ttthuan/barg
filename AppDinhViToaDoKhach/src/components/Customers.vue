@@ -4,6 +4,7 @@
       <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH REQUEST</h4>
     </div>
     <div id="list-area-content">
+      
       <div class="list-item noselect" v-for="request in listRequest" v-if="request.status == 1 && (request.handling == 'null' || request.handling == dinhviUser)" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">

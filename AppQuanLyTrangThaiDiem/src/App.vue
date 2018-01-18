@@ -14,6 +14,15 @@
               </div>
           </div>
       </div>
+
+      <div id="staff-info" @mouseover.prevent="myHover" @mouseleave.prevent="myLeave">
+        <span class="glyphicon glyphicon-user noclick" style="margin: 0px 5px 0px 5px; vertical-align: middle;" >
+        </span>
+        <div class="noclick" style="text-align: center; display: table-cell; vertical-align: middle;">
+            {{staffID}}
+          </div>
+      </div>
+
     </div>
 </template>
 
@@ -30,11 +39,21 @@ export default {
 
   data() {
     return {
+      staffID: ""
     }
   },
 
   methods: {
-    
+    myHover(e){
+      var self = this;
+            self.staffID = localStorage.auth_dinhvivien;
+            $(e.target).css('width', "150px");
+        },
+    myLeave(e){
+      var self = this;
+            self.staffID = "";
+            $(e.target).css('width', "50px");
+        },
   }
 }
 </script>
