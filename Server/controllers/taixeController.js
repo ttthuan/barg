@@ -317,5 +317,23 @@ router.get('/stop/:customer/:driver', function (req, res) {
         });
     res.json("sucess");
 });
+//Dang xuat
+router.get('/logout/:driver/', function (req, res) {
+    var _driver = req.params.driver;
 
+    var ref = firebase.app().database().ref("drivers");
+    ref.once("value")
+        .then(function (snap) {
+            snap.forEach((driver) => {
+                if (driver.key == _driver) {
+                    var refDriver = ref.child(_driver);
+                    refDriver.update({
+                        statusfordriver: 5
+                    });
+                    return;
+                }
+            });
+        });
+    res.json("sucess");
+});
 module.exports = router;
