@@ -37,3 +37,41 @@ C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\Telep
 C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
 C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
 C:\Users\mjnht\onedrive\documents\visual studio 2017\Projects\TelephoneApp\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\App.g.cs
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp_Content.g.cs
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp_MarkupCompile.cache
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp_MarkupCompile.lref
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.exe.config
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.exe
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\TelephoneApp.pdb
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MahApps.Metro.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MaterialDesignColors.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MaterialDesignThemes.Wpf.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Core.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Interfaces.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Linq.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Runtime.InteropServices.RuntimeInformation.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Windows.Interactivity.dll
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MahApps.Metro.pdb
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MahApps.Metro.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MaterialDesignThemes.Wpf.pdb
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\MaterialDesignThemes.Wpf.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\Newtonsoft.Json.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Core.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Interfaces.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Linq.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.PlatformServices.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\bin\Debug\System.Reactive.Windows.Threading.xml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csprojResolveAssemblyReference.cache
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\MainWindow.g.cs
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\App.baml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\MainWindow.baml
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.g.resources
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.Properties.Resources.resources
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.GenerateResource.Cache
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.csproj.CoreCompileInputs.cache
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.exe
+F:\Document\LearnVue\barg\AppDienThoaiVien\TelephoneApp\obj\Debug\TelephoneApp.pdb

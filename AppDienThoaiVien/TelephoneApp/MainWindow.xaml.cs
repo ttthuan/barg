@@ -25,6 +25,7 @@ using System.Windows.Threading;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net;
+using Newtonsoft.Json;
 
 namespace TelephoneApp
 {
@@ -119,34 +120,45 @@ namespace TelephoneApp
                         phone = customer.Key;
                         name = customer.Object.name;
 
-                        var requestNew = await firebase
+                        try
+                        {
+                            var requestNew = await firebase
                               .Child("customers/" + phone + "/request")
                               .OnceSingleAsync<RequestNew>();
+                            if (requestNew == null)
+                            {
+                                App.Current.Dispatcher.Invoke((Action)delegate
+                                {
+                                    RequestHistory req = new RequestHistory(requestNew.address, requestNew.statusforreq, requestNew.typeofcar);
+                                    items.Add(req);
+                                });
+                            }
+                        }catch(Exception ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
 
-
-                        var requests = await firebase
+                        try
+                        {
+                            var requests = await firebase
                             .Child("customers/" + phone + "/histories")
                             .OnceAsync<Request>();
 
 
-                        foreach (var request in requests)
+                            foreach (var request in requests)
+                            {
+                                App.Current.Dispatcher.Invoke((Action)delegate
+                                {
+                                    RequestHistory his = new RequestHistory(request.Object.address, request.Object.statusforreq, request.Object.typeofcar);
+                                    items.Add(his);
+                                });
+
+                            }
+                        }
+                        catch(Exception ex)
                         {
-                            App.Current.Dispatcher.Invoke((Action)delegate
-                            {
-                                RequestHistory his = new RequestHistory(request.Object.address, request.Object.statusforreq, request.Object.typeofcar);
-                                items.Add(his);
-                            });
-
+                            Console.WriteLine(ex.Message);
                         }
-                        if(requestNew == null) {
-                            App.Current.Dispatcher.Invoke((Action)delegate
-                            {
-                                RequestHistory req = new RequestHistory(requestNew.address, requestNew.statusforreq, requestNew.typeofcar);
-                                items.Add(req);
-                            });
-                        }
-                        
-
                     }
                 }
             }
@@ -171,15 +183,15 @@ namespace TelephoneApp
                     //Console.WriteLine("3");
                     if (cbbLoaiXe.SelectedIndex > -1)
                     {
-                        string[] content = new string[6];
-                        content[0] = txtSoDienThoai.Text;
-                        content[1] = txtHoTen.Text;
-                        content[2] = txtViTri.Text;
-                        content[3] = ((TypeCar)cbbLoaiXe.SelectedItem).Id.ToString();
-                        content[4] = DateTime.Now.Ticks.ToString();
-                        content[5] = "1";
+                        RequestItem request = new RequestItem();
+                        request.addressold = txtViTri.Text;
+                        request.phone = txtSoDienThoai.Text;
+                        request.statusforreq = 1;
+                        request.typeofcar = ((TypeCar)cbbLoaiXe.SelectedItem).Id;
+                        request.timereq = DateTime.Now.Ticks;
+                        request.name = txtHoTen.Text;
 
-                        HttpResponseMessage result = await SendCustomerToServer(content);
+                        HttpResponseMessage result = await SendCustomerToServer(request);
                         if (result.StatusCode == HttpStatusCode.OK)
                         {
                             string str = await result.Content.ReadAsStringAsync();
@@ -187,20 +199,13 @@ namespace TelephoneApp
                         }
                         else
                         {
-                            if (result.StatusCode == HttpStatusCode.NoContent)
-                            {
-                                //MessageBox.Show("Tài khoản hoặc mật khẩu không đúng");
-                            }
-                            else
-                            {
-                                //MessageBox.Show("Gateway time out");
-                            }
+                            MessageBox.Show("Gửi thất bại");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine(ex.Message);
                 }
             }
 
@@ -211,10 +216,14 @@ namespace TelephoneApp
 
         }
 
-        public async Task<HttpResponseMessage> SendCustomerToServer(String[] ds)
+        public async Task<HttpResponseMessage> SendCustomerToServer(RequestItem request)
         {
             // customers/:phone/:name/:addressold/:typeofcar/:timereq/:statusforreq
-            HttpResponseMessage response = await HTTP_CLIENT.GetAsync(String.Format("dienthoaivien/customers/{0}/{1}/{2}/{3}/{4}/{5}", ds[0], ds[1], ds[2], ds[3], ds[4], ds[5]));
+            var myContent = JsonConvert.SerializeObject(request);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            HttpResponseMessage response = await HTTP_CLIENT.PostAsync("dienthoaivien/customers", byteContent);
 
             return response;
         }
