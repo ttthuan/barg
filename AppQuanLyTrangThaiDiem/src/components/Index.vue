@@ -1,10 +1,5 @@
 <template>
   <div class="map-container">
-    <div id="floating-panel">
-      <button type="button" class="btn btn-primary" v-on:click="ShowDriverNearLest">
-        <span class="glyphicon glyphicon-screenshot"></span>
-      </button>
-    </div>
     <div class="google-map" :id="mapName"></div>
   </div>
   
