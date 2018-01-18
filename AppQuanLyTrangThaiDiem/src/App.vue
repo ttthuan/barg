@@ -8,7 +8,10 @@
         </div>
         <div id="map-menu" class="map-menu fill transition-menu" >
           <div id="map-menu-content" class="container-fluid fill" style="margin: 0; padding: 0; position: relative;"> 
-              <div class="jumbotron jumbotron-center "></div>
+              <div class="jumbotron jumbotron-center">
+                <!-- <MapDinhVi/> -->
+                <router-view></router-view>
+              </div>
           </div>
       </div>
     </div>
@@ -17,11 +20,21 @@
 <script>
 import HelloWorld from './components/HelloWorld';
 import Customers from './components/Customers';
+//import MapDinhVi from './components/MapDinhVi';
 
 export default {
   name: 'app',
   components: {
     Customers
+  },
+
+  data() {
+    return {
+    }
+  },
+
+  methods: {
+    
   }
 }
 </script>

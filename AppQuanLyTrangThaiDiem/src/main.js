@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import firebase from 'firebase';
 
 // main compoment
-import App from './App'
+import App from './App';
 
 // router components
 import Index from './components/Index.vue';
@@ -24,22 +24,45 @@ var config = {
 };
 firebase.initializeApp(config);
 
-//router
 const routes = [
-	{ path: '/', component: Index },
-	{ path: '/login', component: Login }
+  { 
+    path: '/', 
+    component: Index,
+    meta:{
+      requireAuth: true
+    }
+  },
+  { path: '/login', component: Login },
+  { 
+    path: '/:phone', 
+    component: Index,
+    meta:{
+      requireAuth: true
+    }
+  },
 ];
 
-const router = new VueRouter({
-	routes
+const router = new VueRouter({routes});
+
+Vue.config.productionTip = false;
+
+router.beforeEach((to, from, next)=>{
+  var r = to.matched.some(record => record.meta.requireAuth);
+  console.log("requireAuth " + r);
+  if(r === true){
+    var user = localStorage.auth_dinhvivien;
+    console.log("localStorage " + user);
+    if(!user){
+      console.log("login");
+      next('/login');
+    }
+  }
+  next();
 });
-
-
-Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  template: '<App/>',
-  components: { App }
-})
+    el: '#app',
+    router,
+    render: h => h(App)
+});
