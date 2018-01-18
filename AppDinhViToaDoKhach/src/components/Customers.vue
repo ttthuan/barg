@@ -4,7 +4,7 @@
       <h4 style="color: #FFF; line-height: 2.5; padding-left: 60px; margin: 0px; line-height: 3.6;">DANH SÁCH REQUEST</h4>
     </div>
     <div id="list-area-content">
-      <div class="list-item noselect" v-for="request in listRequest" v-if="request.status == 1 && request.handling == 'null' && request.handling == dinhviUser" @click.prevent ="mySelect" @mouseover="myHover" 
+      <div class="list-item noselect" v-for="request in listRequest" v-if="request.status == 1 && (request.handling == 'null' || request.handling == dinhviUser)" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
@@ -30,7 +30,7 @@
         </div>
       </div>
 
-      <div class="list-item noselect noclick" v-else-if="request.status == 1 && request.handling != dinhviUser" @click.prevent ="mySelect" @mouseover="myHover" 
+      <div class="list-item noselect noclick" v-else-if="request.status == 1  && (request.handling != 'null' && request.handling != dinhviUser)" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
@@ -56,8 +56,8 @@
         </div>
       </div>
 
-
-      <div class="list-item noselect list-item-located" v-else @click.prevent ="mySelect" @mouseover="myHover" 
+      <!-- da dinh vi -->
+      <div class="list-item noselect noclick list-item-located" v-else-if="request.status == 2" @click.prevent ="mySelect" @mouseover="myHover" 
       @mouseleave="myLeave" :id="request.phone">
         <div class="item-avatar noclick">
           <div class="avatar">
@@ -82,6 +82,142 @@
           </div>
         </div>
       </div>
+
+      <!-- da tu choi -->
+      <div class="list-item noselect noclick list-item-ignore" v-else-if="request.status == 3" @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- da nhan xe -->
+      <div class="list-item noselect noclick list-item-accepted" v-else-if="request.status == 4" @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- dang di chuyen -->
+      <div class="list-item noselect noclick list-item-moving" v-else-if="request.status == 5" @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- da hoan thanh -->
+      <div class="list-item noselect noclick list-item-done" v-else-if="request.status == 6" @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- da tu choi -->
+      <div class="list-item noselect noclick list-item-located" v-else-if="request.status == 7" @click.prevent ="mySelect" @mouseover="myHover" 
+      @mouseleave="myLeave" :id="request.phone">
+        <div class="item-avatar noclick">
+          <div class="avatar">
+            <div class="avatar-text">t</div>
+          </div>
+        </div>
+        <div class="item-content noclick">
+          <div class="item-name ">
+            {{request.name}}
+          </div>
+          <div class="item-start">
+            <img :src="linkStartPoint" class="item-image">
+            <div class="item-start-content">
+              {{request.address}}
+            </div>
+          </div>
+          <div class="item-phone">
+            <img :src="linkPhone" class="item-image">
+            <div class="item-phone-content">
+              {{request.phone}}
+            </div>
+          </div>
+        </div>
+      </div>
+
 
 
     </div>
