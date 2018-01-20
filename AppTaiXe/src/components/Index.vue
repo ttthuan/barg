@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="navbar">
-      <button id="hamburger-button">
+      <button id="hamburger-button" @click="hamburgerClick">
         <img src="../../src/assets/image/hamburger-white.png" style="width: 24px; height:24px">
       </button>
     </div>
@@ -53,7 +53,7 @@
   
     </div>
 
-    <div id="hamburger-menu-back"></div>
+    <div id="hamburger-menu-back" @click="menubackClick"></div>
 
     <div id="googlemap"></div>
 
@@ -377,6 +377,17 @@ export default {
 
         });
       }
+    },
+
+    hamburgerClick(){
+          $('#hamburger-menu').addClass("hamburger-menu-expanded");
+          $('#hamburger-menu-back').addClass("hamburger-menu-back-actived");
+
+    },
+
+    menubackClick(){
+          $('#hamburger-menu').removeClass("hamburger-menu-expanded");
+          $('#hamburger-menu-back').removeClass("hamburger-menu-back-actived");
     },
 
   },
