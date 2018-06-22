@@ -16,5 +16,7 @@
 - Chuyền và nhận thông tin từ các app khác và quản lý database từ firebase.
 - Trường hợp nhân viên ở app Định vị vị trí chọn tài xế đầu tiên cho khách hàng mà không thành công (như tài xế không đồng ý) thì server lần lượt gửi thông báo cho 9 tài xế còn lại, nếu không tài xế nào đồng ý thì trạng thái chuyến đi được chuyển về không tìm được tài xế
 # Hình ảnh
+## Hình ảnh app điện thoại viên
+![list image folow month-year](https://drive.google.com/uc?id=1i_mF-EK6xi46j7bPrMxofYB_qGjbDN-b)
 ## Hình ảnh app định vị
 ![list image folow month-year](https://drive.google.com/uc?id=1mMJjGc7UkZotg_21Z-9Y1tOQ5Amh45XG)
